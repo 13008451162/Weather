@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import javax.xml.transform.Source;
+
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
