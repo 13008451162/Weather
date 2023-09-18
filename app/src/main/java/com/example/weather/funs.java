@@ -25,13 +25,14 @@ public class funs {
             @Override
             public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
                 if (null != geoCodeResult && null != geoCodeResult.getLocation()) {
+
                     if (geoCodeResult.error != SearchResult.ERRORNO.NO_ERROR) {
                         // 处理错误情况
-                        Log.e("TAS", "地理编码错误: " + geoCodeResult.error);
+                        Log.e("TASs", "地理编码错误: " + geoCodeResult.error);
                     } else {
                         double latitude = geoCodeResult.getLocation().latitude;
                         double longitude = geoCodeResult.getLocation().longitude;
-                        Log.d("TAS", "纬度: " + latitude + ", 经度: " + longitude);
+                        Log.d("TASs", "纬度: " + latitude + ", 经度: " + longitude);
                         // 在这里处理正确的结果
                     }
                 }
