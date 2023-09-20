@@ -25,7 +25,7 @@ public class SnCal {
     private static final String ak = "ccP5RL5I3NNtHySCDPZpGlA51GGjatpA";
     private static final String sk = "MkBIP5ntlBkGzu20owd1cyeIFEZduSId";
 
-    private String address = "陕西";  //需要搜索的地址
+    private String address = "长安";  //需要搜索的地址
     private int digit = 2;      //需要搜索的行政区划显示子级级数
 
     //https://api.map.baidu.com/api_region_search/v1/?keyword=%E6%B9%98%E6%B0%B4%E9%95%87&sub_admin=2&ak=ccP5RL5I3NNtHySCDPZpGlA51GGjatpA&sn=c2b8d30febe1d10bc1b650a2f04e5d6f
