@@ -1,16 +1,15 @@
-package com.example.weather;
+package com.example.weather.LocationServicesDome;
 
-import android.util.Log;
 import android.widget.Toast;
 
-import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.geocode.GeoCodeOption;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
 import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
-import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
+import com.example.weather.TestTool.LogUtil;
+import com.example.weather.WeatherApplication;
 
 /**
  * 项目名: weather
@@ -43,12 +42,12 @@ public class LocationSearch {
 
                     if (geoCodeResult.error != SearchResult.ERRORNO.NO_ERROR) {
                         // 处理错误情况
-                        Log.e("TASs", "地理编码错误: " + geoCodeResult.error);
-                        Toast.makeText(WeatherDomeApplication.getContext(), "地理位置出错了，请稍后再试！", Toast.LENGTH_SHORT).show();
+                        LogUtil.e("FindlocData", "地理编码错误: " + geoCodeResult.error);
+                        Toast.makeText(WeatherApplication.getContext(), "地理位置出错了，请稍后再试！", Toast.LENGTH_SHORT).show();
                     } else {
                         latitude = geoCodeResult.getLocation().latitude;
                         longitude = geoCodeResult.getLocation().longitude;
-                        Log.d("TASs", "纬度: " + latitude + ", 经度: " + longitude);
+                        LogUtil.d("FindlocData", "纬度: " + latitude + ", 经度: " + longitude);
                         // 在这里处理正确的结果
                     }
                 }
@@ -59,13 +58,13 @@ public class LocationSearch {
                 // 处理反向地理编码结果
                 if (reverseGeoCodeResult == null || reverseGeoCodeResult.error != SearchResult.ERRORNO.NO_ERROR) {
                     //没有找到检索结果
-                    Toast.makeText(WeatherDomeApplication.getContext(), "地理位置出错了，请稍后再试！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WeatherApplication.getContext(), "地理位置出错了，请稍后再试！", Toast.LENGTH_SHORT).show();
                 } else {
                     //详细地址
                     String address = reverseGeoCodeResult.getAddress();
                     //行政区号
                     int adCode = reverseGeoCodeResult.getCityCode();
-                    Log.d("TASs", address + " " + adCode);
+                    LogUtil.d("FindlocData", address + " " + adCode);
                 }
             }
         };

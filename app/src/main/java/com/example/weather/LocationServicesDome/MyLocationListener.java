@@ -1,4 +1,4 @@
-package com.example.weather;
+package com.example.weather.LocationServicesDome;
 
 import android.util.Log;
 
@@ -11,6 +11,7 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.example.weather.TestTool.LogUtil;
 
 /**
  * 项目名: weather
@@ -31,8 +32,7 @@ public class MyLocationListener extends BDAbstractLocationListener {
                 .direction(location.getDirection()).latitude(location.getLatitude())
                 .longitude(location.getLongitude()).build();
 
-        Log.d("TASs", "纬度: " + location.getLatitude() + ", 经度: " + location.getLongitude());
-
+        LogUtil.d("MylocData", "纬度: " + location.getLatitude() + ", 经度: " + location.getLongitude());
     }
 
 }

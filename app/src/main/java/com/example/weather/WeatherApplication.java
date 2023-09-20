@@ -7,6 +7,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
+import com.example.weather.LocationServicesDome.MyLocationListener;
 
 /**
  * 项目名: weather
@@ -16,7 +17,7 @@ import com.baidu.mapapi.SDKInitializer;
  * 描述: TODO
  */
 
-public class WeatherDomeApplication extends Application {
+public class WeatherApplication extends Application {
 
     private static Context context;
 
@@ -62,7 +63,6 @@ public class WeatherDomeApplication extends Application {
         mLocationClient.registerLocationListener(myLocationListener);
         //后台不停抓取位置
         mLocationClient.start();
-
     }
 
     public static Context getContext() {
