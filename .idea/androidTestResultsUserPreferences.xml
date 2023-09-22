@@ -17,6 +17,34 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-1572181191">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="OnePlus&#10; PHK110" value="120" />
+                  <entry key="Tests" value="360" />
+                  <entry key="b36efe72" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-1468368441">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="OnePlus&#10; PHK110" value="120" />
+                  <entry key="Tests" value="360" />
+                  <entry key="b36efe72" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-959359174">
           <value>
             <AndroidTestResultsTableState>
@@ -67,6 +95,7 @@
                   <entry key="Duration" value="90" />
                   <entry key="OnePlus&#10; PHK110" value="120" />
                   <entry key="Tests" value="360" />
+                  <entry key="b36efe72" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -87,6 +116,20 @@
           </value>
         </entry>
         <entry key="1091094210">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="OnePlus&#10; PHK110" value="120" />
+                  <entry key="Tests" value="360" />
+                  <entry key="b36efe72" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="1241296871">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">

@@ -1,5 +1,6 @@
 package com.example.weather.Util;
 
+import com.example.weather.Logic.netWorkUtil.WeatherData;
 import com.google.gson.Gson;
 
 import org.junit.Test;

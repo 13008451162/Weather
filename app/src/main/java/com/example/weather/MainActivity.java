@@ -14,32 +14,33 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapView;
+import com.example.weather.TestTool.LogUtil;
+import com.example.weather.databinding.FragmentPlaceBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;  //给予位置权限
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        View button = findViewById((int) R.id.button);
+        View button = findViewById((int) R.id.imageButton);
 
         // 动态请求位置权限
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         }
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 在按钮点击事件中执行地图显示等操作
-//                LocationSearch locationSearch = new LocationSearch();
-//                locationSearch.Search("西安","长安区");
-            }
-        });
+
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // 在按钮点击事件中执行地图显示等操作
+////                LocationSearch locationSearch = new LocationSearch();
+////                locationSearch.Search("西安","长安区");
+//
+//            }
+//        });
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.weather.Util;
+package com.example.weather.Logic.netWorkUtil;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
