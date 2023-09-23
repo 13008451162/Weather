@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/Clothes"
+        android:icon="@drawable/clothes_grey"
+        android:title="Clothes"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/Country"
+        android:icon="@drawable/country"
+        android:title="Country"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/Set"
+        android:icon="@drawable/set"
+        android:title="Set"
+        app:showAsAction="always"/>
+
+</menu>

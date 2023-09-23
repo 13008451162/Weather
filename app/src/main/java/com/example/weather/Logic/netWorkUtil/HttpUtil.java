@@ -12,6 +12,11 @@ import okhttp3.Request;
  */
 
 public class HttpUtil {
+    /**
+     * 向服务器发送 Okhttp 请求
+     * @param address 服务器地址
+     * @param callback okhttp回调
+     */
     public static void SendOkhttpRequest(String address, okhttp3.Callback callback) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(address).build();

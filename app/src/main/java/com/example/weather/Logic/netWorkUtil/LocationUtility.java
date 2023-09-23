@@ -1,15 +1,11 @@
 package com.example.weather.Logic.netWorkUtil;
 
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 
-import com.example.weather.TestTool.LogUtil;
-import com.example.weather.WeatherApplication;
+import com.example.weather.Ui.Place.PlaceViewModel.LocationDataCallback;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
@@ -54,6 +50,12 @@ public class LocationUtility {
         return locationData.getLocation();
     }
 
+
+    /**
+     * 用于回调服务器返回的内容，将数据返回给ViewModel层的回调接口
+     * @param address 需要访问的服务器地址
+     * @param callback 被操作的回调接口
+     */
     //使用final保证接口不会被异常修改
     public static void SendAddress(String address,final LocationDataCallback callback) {
         HttpUtil.SendOkhttpRequest(address, new okhttp3.Callback() {

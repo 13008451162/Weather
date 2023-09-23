@@ -1,4 +1,6 @@
-package com.example.weather.Logic.netWorkUtil;
+package com.example.weather.Ui.Place.PlaceViewModel;
+
+import com.example.weather.Logic.netWorkUtil.LocationData;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,9 +14,16 @@ import java.util.List;
  */
 
 public interface LocationDataCallback {
-    //成功返回数据
+
+    /**
+     * 成功返回数据
+     * @param locationList 保存城市信息的List
+     */
     void onSuccess( List<LocationData.LocationDTO> locationList);
 
-    //未成功返回数据
+    /**
+     * 未成功返回数据
+     * @param e 错误的异常类型
+     */
     void onFailure(IOException e);
 }

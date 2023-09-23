@@ -1,4 +1,6 @@
-package com.example.weather.Logic.netWorkUtil;
+package com.example.weather.Ui.Place.PlaceViewModel;
+
+import com.example.weather.Logic.netWorkUtil.PopularCitiesData;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,8 +14,16 @@ import java.util.List;
  */
 
 public interface PopularCitiesDataCallback {
+
+    /**
+     * 成功返回数据
+     * @param popularCitiesList 保存热门城市信息的list
+     */
     void onSuccess( List<PopularCitiesData.TopCityListDTO> popularCitiesList);
 
-    //未成功返回数据
+    /**
+     * 未成功返回数据
+     * @param e 错误的异常类型
+     */
     void onFailure(IOException e);
 }

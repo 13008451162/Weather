@@ -2,7 +2,7 @@ package com.example.weather.Logic.netWorkUtil;
 
 import androidx.annotation.NonNull;
 
-import com.example.weather.Ui.Place.PlaceAdapter;
+import com.example.weather.Ui.Place.PlaceViewModel.PopularCitiesDataCallback;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -27,6 +27,10 @@ public class PopularCitiesUtility {
         JosnData = josnData;
     }
 
+    /**
+     * 使用Gson获取服务器的内容
+     * @return 返回值代表是否成功从服务器获取内容成功返回true，失败返回false
+     */
     public boolean handleLocationResponse() {
         Gson gson = new Gson();
 
@@ -45,6 +49,12 @@ public class PopularCitiesUtility {
         return popularCitiesData.getTopCityList();
     }
 
+    /**
+     * 用于回调服务器返回的内容，将数据返回给ViewModel层的回调接口
+     * @param address 需要访问的服务器地址
+     * @param callback 被操作的回调接口
+     */
+    //使用final保证接口不会被异常修改
     public static void SendAddress(String address, final PopularCitiesDataCallback callback) {
         HttpUtil.SendOkhttpRequest(address, new okhttp3.Callback() {
                     @Override
