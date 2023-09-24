@@ -1,5 +1,6 @@
 package com.example.weather;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -22,6 +24,7 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapView;
 import com.example.weather.TestTool.LogUtil;
 import com.example.weather.Ui.Place.CityInquireFragment;
+import com.example.weather.Ui.SearchActivity;
 import com.example.weather.databinding.FragmentPlaceBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         View button = findViewById((int) R.id.imageButton);
+
+        //显示出操作栏
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
 
         // 动态请求位置权限
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -75,14 +83,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        LogUtil.d("TAG1","sasas");
         int Id = item.getItemId();
 
         if(Id == R.id.Clothes){
             return true;
         } else if (Id == R.id.Country) {
-            LogUtil.d("TAG1","sasas");
-            replaceFragment(new CityInquireFragment());
+            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+            startActivity(intent);
+//            replaceFragment(new CityInquireFragment());
             return true;
         }else if(Id == R.id.Set){
             return true;
@@ -91,11 +99,22 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * 加载城市搜索的Fragment控件
+     * @param fragment 需要加载的fragment
+     */
     private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager(); // 或者使用 getFragmentManager()（如果在 Fragment 中）
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragmentPlace, fragment);
-        transaction.addToBackStack(null); // 将 Fragment 添加到回退栈，以便用户可以返回上一个 Fragment
+
+        //获取FragmentManager
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        //获取Fragment管理器
+        FragmentTransaction transaction= fragmentManager.beginTransaction();
+
+        // 将MyFragment添加到Activity
+//        transaction.replace(R.id.LocationFragment,fragment);
+
+        // 提交事务
         transaction.commit();
     }
 
