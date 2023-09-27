@@ -56,7 +56,7 @@ public class WeatherApplication extends Application {
     private void initMap() {
         // 定位初始化
         LocationClientOption option = new LocationClientOption();
-        option.setScanSpan(1000);
+        option.setScanSpan(100000);
         mLocationClient.setLocOption(option);
 
         MyLocationListener myLocationListener = new MyLocationListener();
