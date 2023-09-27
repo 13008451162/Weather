@@ -3,6 +3,7 @@ package com.example.weather.Ui.Place;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -21,6 +23,7 @@ import com.example.weather.Logic.netWorkUtil.LocationUtility;
 import com.example.weather.Logic.netWorkUtil.PopularCitiesData;
 import com.example.weather.Ui.Place.PlaceViewModel.PopularCitiesDataCallback;
 import com.example.weather.Logic.netWorkUtil.PopularCitiesUtility;
+import com.example.weather.Ui.Place.PlaceViewModel.CityUiViewmodel;
 import com.example.weather.WeatherApplication;
 import com.example.weather.databinding.FragmentPlaceBinding;
 
@@ -42,9 +45,18 @@ public class CityInquireFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
+         CityUiViewmodel viewModel = new ViewModelProvider(this).get(CityUiViewmodel.class);
+
         binding = FragmentPlaceBinding.inflate(inflater, container, false);
-        //显示热门城市数据
-        PopularCities();
+        Log.d("TAG", "fragment");
+
+        if (viewModel.getUrl() == "") {
+            //显示热门城市数据
+            PopularCities();
+        }
+
         binding.placeCityText.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -54,8 +66,15 @@ public class CityInquireFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //显示搜索的城市数据
-                LocationListDisplay(charSequence.toString());
+
+                /**
+                 * 显示搜索的城市数据
+                 * 当搜索框无数据时，charSequence.length长度为0，
+                 * 但是charSequence.toString() ！= null
+                 */
+                viewModel.setUrl(charSequence.toString());
+                LocationListDisplay(viewModel.getUrl());
+
             }
 
             @Override
@@ -69,7 +88,7 @@ public class CityInquireFragment extends Fragment {
             public void onClick(View view) {
                 String inputText = binding.placeCityText.getText().toString();
 
-                if(inputText.length() != 0){
+                if (inputText.length() != 0) {
                     //显示搜索的城市数据
                     LocationListDisplay(inputText);
                 }
@@ -85,6 +104,7 @@ public class CityInquireFragment extends Fragment {
         //释放绑定类，防止内存泄露
         binding = null;
     }
+
 
     /**
      * 用于显示当前15个热门城市数据
@@ -107,7 +127,7 @@ public class CityInquireFragment extends Fragment {
 
                         //刷新数据
                         if (popularCitiesList != null) {
-                            adapter.notifyItemInserted(popularCitiesList.size() - 1);
+                            adapter.notifyItemChanged(popularCitiesList.size() - 1, 1);
                         }
 
                         //城市搜索不可见，热门城市可见
@@ -132,6 +152,7 @@ public class CityInquireFragment extends Fragment {
 
     /**
      * 用于返回搜索的位置信息
+     *
      * @param text 模糊搜索的地址内容
      */
     public void LocationListDisplay(String text) {
@@ -149,7 +170,7 @@ public class CityInquireFragment extends Fragment {
             throw new RuntimeException(e);
         }
 
-        //判断当前输入框是否有数据,如果有数据的话显示热门城市数据
+        //判断当前输入框是否有数据,如果无数据的话显示热门城市数据
         if (text.length() == 0) {
             LogUtil.v("ViewNO", "成功");
             //显示热门城市数据
@@ -187,6 +208,7 @@ public class CityInquireFragment extends Fragment {
                             //热门城市不可见，城市搜索可见
                             binding.PopularRecyclerViewCity.setVisibility(View.GONE);
                             binding.recyclerViewCity.setVisibility(View.VISIBLE);
+
                         }
                     });
                 }

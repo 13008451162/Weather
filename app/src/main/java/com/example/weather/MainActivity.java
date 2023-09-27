@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
         } else if (Id == R.id.Country) {
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(intent);
-//            replaceFragment(new CityInquireFragment());
             return true;
         }else if(Id == R.id.Set){
             return true;
