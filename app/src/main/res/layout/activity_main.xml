@@ -48,7 +48,7 @@
 
     <fragment
         android:id="@+id/cityWeatherFragment"
-        android:name="com.example.weather.Ui.Place.CityWeatherFragment"
+        android:name="com.example.weather.Ui.Place.Fragment.CityWeatherFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

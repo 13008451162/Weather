@@ -80,7 +80,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/TodayWeather"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="90dp"
                     android:orientation="horizontal">
 
                 </androidx.recyclerview.widget.RecyclerView>
@@ -116,6 +116,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_marginStart="25dp"
+                    android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="15dp">
 
@@ -154,6 +155,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
+                    android:layout_gravity="center"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="15dp">
@@ -192,6 +194,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
+                    android:layout_gravity="center"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="15dp">
@@ -230,6 +233,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
+                    android:layout_gravity="center"
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="15dp">
@@ -268,6 +272,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
+                    android:layout_gravity="center"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="15dp">
@@ -306,6 +311,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
+                    android:layout_gravity="center"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="15dp">
@@ -597,6 +603,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
+                    android:background="#000000"
                     android:src="@drawable/logo_s_light" />
 
                 <TextView

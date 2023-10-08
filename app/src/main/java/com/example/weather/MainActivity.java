@@ -18,14 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.MapView;
-import com.example.weather.TestTool.LogUtil;
-import com.example.weather.Ui.Place.CityInquireFragment;
 import com.example.weather.Ui.SearchActivity;
-import com.example.weather.databinding.FragmentPlaceBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,17 +39,8 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         }
 
-//        //设置导航栏
-//        setSupportActionBar(toolbar);
-//
-////得到这个导航栏
-//        ActionBar actionBar = getSupportActionBar();
-//
-//        if (actionBar != null) {
-//            actionBar.setDisplayHomeAsUpEnabled(true);  //打开homeAsUp按钮
-////            actionBar.setHomeAsUpIndicator(R.drawable.apple);   //为这个按钮设置图片
-//        }
-
+        //设置导航栏
+        setSupportActionBar(toolbar);
     }
 
 

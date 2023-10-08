@@ -1,4 +1,4 @@
-package com.example.weather.Ui.Place;
+package com.example.weather.Ui.Place.Fragment;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,14 +16,15 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.weather.Ui.Place.PlaceAdapter;
+import com.example.weather.Ui.Place.PlaceViewModel.DataCallback;
 import com.example.weather.Logic.netWorkUtil.LocationData;
 import com.example.weather.TestTool.LogUtil;
-import com.example.weather.Ui.Place.PlaceViewModel.LocationDataCallback;
 import com.example.weather.Logic.netWorkUtil.LocationUtility;
 import com.example.weather.Logic.netWorkUtil.PopularCitiesData;
-import com.example.weather.Ui.Place.PlaceViewModel.PopularCitiesDataCallback;
 import com.example.weather.Logic.netWorkUtil.PopularCitiesUtility;
 import com.example.weather.Ui.Place.PlaceViewModel.CityUiViewmodel;
+import com.example.weather.Ui.Place.PopularCitiesAdapter;
 import com.example.weather.WeatherApplication;
 import com.example.weather.databinding.FragmentPlaceBinding;
 
@@ -112,7 +113,9 @@ public class CityInquireFragment extends Fragment {
     public void PopularCities() {
         //获取热门数据地址
         String address = "https://geoapi.qweather.com/v2/city/top?number=15&range=cn&key=64f323b501dc410cb7ec4fd1b503aab4";
-        PopularCitiesUtility.SendAddress(address, new PopularCitiesDataCallback() {
+
+        PopularCitiesUtility popularCitiesUtility = new PopularCitiesUtility();
+        popularCitiesUtility.sendAddress(address, new DataCallback<PopularCitiesData.TopCityListDTO>() {
 
             @Override
             public void onSuccess(List<PopularCitiesData.TopCityListDTO> popularCitiesList) {
@@ -152,7 +155,6 @@ public class CityInquireFragment extends Fragment {
 
     /**
      * 用于返回搜索的位置信息
-     *
      * @param text 模糊搜索的地址内容
      */
     public void LocationListDisplay(String text) {
@@ -185,21 +187,26 @@ public class CityInquireFragment extends Fragment {
              * "Effectively final" 意味着变量在分配初值后不再被修改。
              */
             boolean finalVisibility = Visibility;
-            LocationUtility.SendAddress(addressSum, new LocationDataCallback() {
+
+
+            LocationUtility locationUtility = new LocationUtility();
+
+             locationUtility.sendAddress(addressSum, new DataCallback<LocationData.LocationDTO>() {
+
                 @Override
-                public void onSuccess(List<LocationData.LocationDTO> locationList) {
+                public void onSuccess(List<LocationData.LocationDTO> dataList) {
                     //回调成功以后在Ui线程中更新RecyclerView
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(WeatherApplication.getContext());
                             binding.recyclerViewCity.setLayoutManager(linearLayoutManager);
-                            PlaceAdapter adapter = new PlaceAdapter(locationList);
+                            PlaceAdapter adapter = new PlaceAdapter(dataList);
                             binding.recyclerViewCity.setAdapter(adapter);
 
                             //刷新数据
-                            if (locationList != null) {
-                                adapter.notifyItemInserted(locationList.size() - 1);
+                            if (dataList != null) {
+                                adapter.notifyItemInserted(dataList.size() - 1);
                             } else {
                                 //搜索不到时显示的视图
                                 binding.NoNet.setVisibility(View.VISIBLE);
@@ -212,6 +219,7 @@ public class CityInquireFragment extends Fragment {
                         }
                     });
                 }
+
 
                 @Override
                 public void onFailure(IOException e) {

@@ -3,11 +3,16 @@ package com.example.weather;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
 import com.example.weather.LocationServicesDome.MyLocationListener;
+import com.example.weather.Ui.Place.Fragment.CityWeatherFragment;
+import com.example.weather.Ui.Place.PlaceViewModel.CityWeatherViewModel;
 
 /**
  * 项目名: weather
@@ -23,6 +28,16 @@ public class WeatherApplication extends Application {
 
     //获取初始状态的位置
     private LocationClient mLocationClient;
+
+    private static WeatherApplication weatherApplication;
+
+    //单例模式
+    public static  WeatherApplication getInstance(){
+        if (weatherApplication == null){
+            return new WeatherApplication();
+        }
+        return weatherApplication;
+    };
 
     @Override
     public void onCreate() {
@@ -56,13 +71,21 @@ public class WeatherApplication extends Application {
     private void initMap() {
         // 定位初始化
         LocationClientOption option = new LocationClientOption();
-        option.setScanSpan(100000);
+        option.setScanSpan(100_000);
         mLocationClient.setLocOption(option);
 
-        MyLocationListener myLocationListener = new MyLocationListener();
+        MyLocationListener myLocationListener = MyLocationListener.getInstance();
         mLocationClient.registerLocationListener(myLocationListener);
         //后台不停抓取位置
         mLocationClient.start();
+//        CityWeatherViewModel viewModel = new ViewModelProvider(CityWeatherFragment).get();
+//        mLocationClient.stop();
+    }
+
+    public void StopGetLocation(){
+        if(mLocationClient.isStarted()){
+            mLocationClient.stop();
+        }
     }
 
     public static Context getContext() {

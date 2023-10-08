@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.weather.Logic.netWorkUtil.LocationData;
-import com.example.weather.Ui.Place.PlaceViewModel.LocationDataCallback;
 import com.example.weather.Logic.netWorkUtil.LocationUtility;
 import com.example.weather.TestTool.LogUtil;
 import com.example.weather.Ui.Place.PlaceAdapter;

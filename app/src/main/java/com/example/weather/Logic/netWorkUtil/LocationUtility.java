@@ -2,7 +2,7 @@ package com.example.weather.Logic.netWorkUtil;
 
 import androidx.annotation.NonNull;
 
-import com.example.weather.Ui.Place.PlaceViewModel.LocationDataCallback;
+import com.example.weather.Ui.Place.PlaceViewModel.DataCallback;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -19,25 +19,33 @@ import okhttp3.Response;
  * 描述: 用于模糊搜索获取位置等地理信息
  */
 
-public class LocationUtility {
-    private LocationData locationData;  //
-    private String jsonData; //地区的Json数据
+public class LocationUtility extends GenericUtility<LocationData> {
 
     public LocationUtility(String jsonData) {
-        this.jsonData = jsonData;
+        super(jsonData);
     }
+
+    public LocationUtility() {
+    }
+
+    @Override
+    protected LocationUtility createUtility(String jsonData) {
+        return new LocationUtility(jsonData);
+    }
+
 
     /**
      * 解析服务器返回的地址json数据
      * @return 是否成功解析
      */
-    private boolean handleLocationResponse() {
+    @Override
+    protected boolean handJsonParse() {
         //获取Gson实例
         Gson gson = new Gson();
 
         try {
-            // 使用 Gson 解析 JSON 数据,将JSON数据解析为WeatherData对象
-            locationData = gson.fromJson(jsonData, LocationData.class);
+            // 使用 Gson 解析 JSON 数据,将JSON数据解析为LocationData对象
+            data = gson.fromJson(jsonData, LocationData.class);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,48 +53,8 @@ public class LocationUtility {
         return false;
     }
 
-    //返回地址信息的链表
-    public List<LocationData.LocationDTO> getLocationDataList() {
-        return locationData.getLocation();
-    }
-
-
-    /**
-     * 用于回调服务器返回的内容，将数据返回给ViewModel层的回调接口
-     * @param address 需要访问的服务器地址
-     * @param callback 被操作的回调接口
-     */
-    //使用final保证接口不会被异常修改
-    public static void SendAddress(String address,final LocationDataCallback callback) {
-        HttpUtil.SendOkhttpRequest(address, new okhttp3.Callback() {
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                //得到服务器返回内容，判断是否访问到服务器
-                if (response.isSuccessful()) {
-                    //从服务器获取数据进行解析
-                    String responseBody = response.body().string();
-                    LocationUtility utility;
-                    try {
-                        utility = new LocationUtility(responseBody);
-                        //判断是否成功解析数据，若成功解析则回调返回数据
-                        if(utility.handleLocationResponse()){
-                            List<LocationData.LocationDTO> LocationList = utility.getLocationDataList();
-                            callback.onSuccess(LocationList);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        //释放对象，防止内存泄漏
-                        utility = null;
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                //处理请求失败的异常情况
-                callback.onFailure(e);
-            }
-        });
+    @Override
+    public List<LocationData.LocationDTO> getDataList() {
+        return data.getLocation();
     }
 }
