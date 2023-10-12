@@ -56,6 +56,16 @@ public class HourlyWeatherData {
         public String getText() {
             return text;
         }
+
+        @Override
+        public String toString() {
+            return "HourlyDTO{" +
+                    "fxTime='" + fxTime + '\'' +
+                    ", temp='" + temp + '\'' +
+                    ", icon='" + icon + '\'' +
+                    ", text='" + text + '\'' +
+                    '}';
+        }
     }
 
     public List<HourlyDTO> getHourly() {

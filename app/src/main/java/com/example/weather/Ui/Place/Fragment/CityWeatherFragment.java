@@ -1,6 +1,7 @@
 package com.example.weather.Ui.Place.Fragment;
 
 import android.app.Activity;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,17 +55,15 @@ public class CityWeatherFragment extends Fragment {
 
         //获取当前位置信息
         MyLocationListener myLocationListener = MyLocationListener.getInstance();
-
-//         String LocationInformation = myLocationListener.getLocationInformation();
         myLocationListener.locationInformationLiveData.observe(requireActivity(), this::update);
-
-//        LogUtil.d("YSSY",LocationInformation);
-        //显示24小时天气
-
 
         return binding.getRoot();
     }
 
+    /**
+     *  用于显示24小时天气
+     * @param locationInformation
+     */
     private void update(String locationInformation) {
         viewModel.getHourlyDTo(locationInformation, new DataCallback<HourlyWeatherData.HourlyDTO>() {
             @Override
@@ -86,6 +85,16 @@ public class CityWeatherFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+
+
+                        //制作横向的布局方式
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                        binding.TodayWeather.setLayoutManager(linearLayoutManager);
+
+//                        HourlyWeatherAdapter adapter = new HourlyWeatherAdapter(dataList);
+//                        binding.TodayWeather.setAdapter(adapter);
+
                         Toast.makeText(getContext(), "定位失败,请检查定位是否开启", Toast.LENGTH_SHORT).show();
                     }
                 });

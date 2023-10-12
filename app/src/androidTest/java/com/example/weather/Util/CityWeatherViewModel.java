@@ -1,17 +1,18 @@
-package com.example.weather.Ui.Place.PlaceViewModel;
+package com.example.weather.Util;
 
 import android.app.Activity;
 import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.weather.Logic.model.TwentyFourHourWeatherData;
 import com.example.weather.Logic.WeatherDataInquireTool;
+import com.example.weather.Logic.model.TwentyFourHourWeatherData;
 import com.example.weather.Logic.netWorkUtil.HourlyWeatherData;
 import com.example.weather.Logic.netWorkUtil.HourlyWeatherUtility;
 import com.example.weather.TestTool.LogUtil;
+import com.example.weather.Ui.Place.PlaceViewModel.DataCallback;
 
-import org.chromium.base.task.AsyncTask;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
@@ -40,12 +41,13 @@ public class CityWeatherViewModel extends ViewModel {
      *
      * @return 返回保存天气情况的链表
      */
+    @Test
     public void getHourlyDTo(String Location, DataCallback<HourlyWeatherData.HourlyDTO> callback) {
 
         List<HourlyWeatherData.HourlyDTO> mList;
 
         //获取天气的地址
-        String address = "https://devapi.qweather.com/v7/weather/24h?location=" + Location + "&key=64f323b501dc410cb7ec4fd1b503aab4";
+        String address = "https://devapi.qweather.com/v7/weather/24h?location=108.91,34.16&key=64f323b501dc410cb7ec4fd1b503aab4";
 
         Log.e("haojinhui", "getHourlyDTo: " + address);
 
@@ -55,7 +57,7 @@ public class CityWeatherViewModel extends ViewModel {
 
             @Override
             public void onSuccess(List<HourlyWeatherData.HourlyDTO> dataList) {
-
+                //保存数据到数据库
                 SplitList(dataList);
                 callback.onSuccess(dataList);
             }
@@ -65,6 +67,13 @@ public class CityWeatherViewModel extends ViewModel {
 
             }
 
+//            @Override
+//            public void onFailure(List<HourlyWeatherData.HourlyDTO> dataList) {
+////                TwentyFourHourWeatherData weatherData =  WeatherDataInquireTool.dp.weatherDataDao()
+////                        .getUserName(WeatherDataInquireTool.hourlyWeatherData);
+////                callback.onFailure(weatherData.data);
+//            }
+
         });
     }
 
@@ -73,8 +82,7 @@ public class CityWeatherViewModel extends ViewModel {
         for(HourlyWeatherData.HourlyDTO dto : dataList){
             TwentyFourHourWeatherData weatherData = new TwentyFourHourWeatherData();
             weatherData.data = dto;
-            LogUtil.d("DataW",dto.toString());
-
+            LogUtil.d("DATA",dto.toString());
             WeatherDataInquireTool.dpHourWeatherDatabase.weatherDataDao().insertData(weatherData);
         }
 

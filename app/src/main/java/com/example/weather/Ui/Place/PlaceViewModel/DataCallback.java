@@ -16,4 +16,5 @@ public interface DataCallback<T> {
     void onSuccess(List<T> dataList);
 
     void onFailure(IOException e);
+    
 }

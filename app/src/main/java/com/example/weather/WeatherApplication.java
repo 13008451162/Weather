@@ -5,12 +5,16 @@ import android.content.Context;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.room.Room;
 
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
 import com.example.weather.LocationServicesDome.MyLocationListener;
+import com.example.weather.Logic.WeatherDataInquireTool;
+import com.example.weather.Logic.model.TwentyFourHourWeatherDatabase;
+import com.example.weather.TestTool.LogUtil;
 import com.example.weather.Ui.Place.Fragment.CityWeatherFragment;
 import com.example.weather.Ui.Place.PlaceViewModel.CityWeatherViewModel;
 
@@ -37,11 +41,13 @@ public class WeatherApplication extends Application {
             return new WeatherApplication();
         }
         return weatherApplication;
-    };
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        WeatherDataInquireTool.dpHourWeatherDatabase = Room.databaseBuilder(this, TwentyFourHourWeatherDatabase.class, "WeatherData").build();
 
         // 获取context
         context = getApplicationContext();

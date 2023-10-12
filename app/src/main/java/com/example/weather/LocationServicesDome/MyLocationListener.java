@@ -35,8 +35,6 @@ public class MyLocationListener extends BDAbstractLocationListener {
     private volatile static MyLocationListener instance;
     public MutableLiveData<String> locationInformationLiveData = new MutableLiveData<>("");
 
-    private StringBuilder locationInformationBuilder;
-
     // 私有构造函数，防止外部实例化
     private MyLocationListener() {
     }
@@ -69,12 +67,7 @@ public class MyLocationListener extends BDAbstractLocationListener {
         latitude = String.format("%.2f", location.getLatitude());
         longitude = String.format("%.2f", location.getLongitude());
 
-        // 使用StringBuilder构建位置信息
-//        locationInformationBuilder.setLength(0); // 清空StringBuilder
-//        locationInformationBuilder.append(longitude).append(",").append(latitude);
-////
-//        LogUtil.d("MylocData", "位置 = "+locationInformationBuilder.toString());
-//
+
         locationInformationLiveData.postValue(
                 longitude + "," + latitude
         );
