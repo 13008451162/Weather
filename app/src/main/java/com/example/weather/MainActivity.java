@@ -7,9 +7,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -18,19 +19,39 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.weather.Logic.WeatherDataInquireTool;
+import com.example.weather.Logic.model.TwentyFourHourWeatherDatabase;
+import com.example.weather.Logic.netWorkUtil.HourlyWeatherData;
 import com.example.weather.Ui.SearchActivity;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "haojinhui";
+
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;  //给予位置权限
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        View button = findViewById((int) R.id.imageButton);
+//        WeatherDataInquireTool.dpHourWeatherDatabase = TwentyFourHourWeatherDatabase.getInstance(this);
+
 
         //显示出操作栏
         Toolbar toolbar = findViewById(R.id.toolbar);
+
+
+//        toolbar.setOnClickListener((v) -> {
+//            new Thread(() -> {
+//                List<HourlyWeatherData.HourlyDTO> allData = WeatherDataInquireTool.dpHourWeatherDatabase.weatherDataDao().getAllData();
+//                Log.e(TAG, "onCreate: " + allData.size());
+//                for (HourlyWeatherData.HourlyDTO allDatum : allData) {
+//                    Log.e(TAG, "onCreate: " + allDatum);
+//                }
+//            }).start();
+//        });
         setSupportActionBar(toolbar);
 
 
@@ -41,6 +62,22 @@ public class MainActivity extends AppCompatActivity {
 
         //设置导航栏
         setSupportActionBar(toolbar);
+
+
+        // 测试没问题
+//        TwentyFourHourWeatherDataDao dao = TwentyFourHourWeatherDatabase.getInstance().weatherDataDao();
+//        TwentyFourHourWeatherData data = new TwentyFourHourWeatherData();
+//        new Thread(() -> {
+//            dao.insertData(data, data, data);
+//        }).start();
+//        new Thread(() -> {
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//            Log.e(TAG, "onCreate: haojinhui: " + dao.getAllData());
+//        }).start();
     }
 
 
@@ -69,13 +106,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int Id = item.getItemId();
 
-        if(Id == R.id.Clothes){
+        if (Id == R.id.Clothes) {
             return true;
         } else if (Id == R.id.Country) {
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(intent);
             return true;
-        }else if(Id == R.id.Set){
+        } else if (Id == R.id.Set) {
             return true;
         }
 
@@ -84,15 +121,16 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * 加载城市搜索的Fragment控件
+     *
      * @param fragment 需要加载的fragment
      */
-    private void replaceFragment(Fragment fragment){
+    private void replaceFragment(Fragment fragment) {
 
         //获取FragmentManager
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         //获取Fragment管理器
-        FragmentTransaction transaction= fragmentManager.beginTransaction();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         // 将MyFragment添加到Activity
 //        transaction.replace(R.id.LocationFragment,fragment);

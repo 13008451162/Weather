@@ -28,8 +28,8 @@ public interface TwentyFourHourWeatherDataDao {
     @Query("SELECT * FROM TwentyFourHourWeatherData WHERE id = :id")
     TwentyFourHourWeatherData getUserName(int id); // 在这里使用相同的参数名
 
-    @Delete
-    void delete(TwentyFourHourWeatherData weatherData);
+    @Query("delete from TwentyFourHourWeatherData")
+    void deleteAll();
 
     @Update
     public void update(TwentyFourHourWeatherData weatherData);

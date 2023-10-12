@@ -78,11 +78,13 @@ public class CityWeatherViewModel extends ViewModel {
     }
 
     public void SplitList(List<HourlyWeatherData.HourlyDTO> dataList){
+        WeatherDataInquireTool.dpHourWeatherDatabase.weatherDataDao().deleteAll();
 
         for(HourlyWeatherData.HourlyDTO dto : dataList){
             TwentyFourHourWeatherData weatherData = new TwentyFourHourWeatherData();
             weatherData.data = dto;
             LogUtil.d("DATA",dto.toString());
+
             WeatherDataInquireTool.dpHourWeatherDatabase.weatherDataDao().insertData(weatherData);
         }
 

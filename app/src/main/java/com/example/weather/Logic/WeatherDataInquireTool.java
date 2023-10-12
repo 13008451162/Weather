@@ -1,9 +1,6 @@
 package com.example.weather.Logic;
 
-import androidx.room.Room;
-
 import com.example.weather.Logic.model.TwentyFourHourWeatherDatabase;
-import com.example.weather.WeatherApplication;
 
 /**
  * 项目名: weather
@@ -18,4 +15,5 @@ public class WeatherDataInquireTool {
     public static TwentyFourHourWeatherDatabase dpHourWeatherDatabase;
 
     public static final int HOURLYWEATHERDATA = 1;
+
 }

@@ -3,6 +3,7 @@ package com.example.weather.Logic.netWorkUtil;
 
 import androidx.annotation.NonNull;
 
+import com.example.weather.Logic.model.TwentyFourHourWeatherData;
 import com.example.weather.Ui.Place.PlaceViewModel.DataCallback;
 
 import java.io.IOException;
@@ -82,5 +83,7 @@ abstract class GenericUtility<T>{
      * @return
      */
     public abstract List getDataList();
+
+
 
 }

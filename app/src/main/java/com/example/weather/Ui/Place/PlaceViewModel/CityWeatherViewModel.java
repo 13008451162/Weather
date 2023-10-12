@@ -5,13 +5,11 @@ import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.weather.Logic.model.TwentyFourHourWeatherData;
 import com.example.weather.Logic.WeatherDataInquireTool;
+import com.example.weather.Logic.model.TwentyFourHourWeatherData;
 import com.example.weather.Logic.netWorkUtil.HourlyWeatherData;
 import com.example.weather.Logic.netWorkUtil.HourlyWeatherUtility;
 import com.example.weather.TestTool.LogUtil;
-
-import org.chromium.base.task.AsyncTask;
 
 import java.io.IOException;
 import java.util.List;
@@ -69,11 +67,12 @@ public class CityWeatherViewModel extends ViewModel {
     }
 
     public void SplitList(List<HourlyWeatherData.HourlyDTO> dataList){
+        WeatherDataInquireTool.dpHourWeatherDatabase.weatherDataDao().deleteAll();
 
         for(HourlyWeatherData.HourlyDTO dto : dataList){
             TwentyFourHourWeatherData weatherData = new TwentyFourHourWeatherData();
             weatherData.data = dto;
-            LogUtil.d("DataW",dto.toString());
+            LogUtil.d("haojinhui",dto.toString());
 
             WeatherDataInquireTool.dpHourWeatherDatabase.weatherDataDao().insertData(weatherData);
         }

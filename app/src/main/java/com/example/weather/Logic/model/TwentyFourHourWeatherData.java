@@ -26,4 +26,6 @@ public class TwentyFourHourWeatherData {
 
     @ColumnInfo
     public HourlyWeatherData.HourlyDTO data;
+
+
 }
