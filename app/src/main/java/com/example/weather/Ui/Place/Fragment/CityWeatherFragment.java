@@ -1,9 +1,6 @@
 package com.example.weather.Ui.Place.Fragment;
 
-import android.app.Activity;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +9,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.baidu.mshield.ac.F;
 import com.example.weather.LocationServicesDome.MyLocationListener;
-import com.example.weather.Logic.netWorkUtil.HourlyWeatherData;
+import com.example.weather.Logic.WeatherDataInquireTool;
+import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherData;
 import com.example.weather.TestTool.LogUtil;
 import com.example.weather.Ui.Place.HourlyWeatherAdapter;
 import com.example.weather.Ui.Place.PlaceViewModel.CityWeatherViewModel;
@@ -51,14 +47,30 @@ public class CityWeatherFragment extends Fragment {
 
         viewModel = new ViewModelProvider(this).get(CityWeatherViewModel.class);
 
-        viewModel.setActivity(getActivity());
+        viewModel.setRequireActivity(requireActivity());
 
-        //获取当前位置信息
-        MyLocationListener myLocationListener = MyLocationListener.getInstance();
-        myLocationListener.locationInformationLiveData.observe(requireActivity(), this::update);
+        /*
+        这里有一个if语句判断当前位置是初始位置还是被加载位置
+         */
+        currentLocation();
+        LogUtil.d("sunwenyu","dataList.toString()");
+
+
 
         return binding.getRoot();
     }
+
+
+    /**
+     * 显示当前位置页面的信息
+     */
+    public void currentLocation(){
+        //获取当前位置信息
+        MyLocationListener myLocationListener = MyLocationListener.getInstance();
+        myLocationListener.locationInformationLiveData.observe(requireActivity(), this::update);
+    }
+
+
 
     /**
      *  用于显示24小时天气
@@ -82,18 +94,20 @@ public class CityWeatherFragment extends Fragment {
 
             @Override
             public void onFailure(IOException e) {
+
+                List<HourlyWeatherData.HourlyDTO> list = WeatherDataInquireTool.dpHourWeatherDatabase.weatherDataDao().getAllData();
+
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
-
                         //制作横向的布局方式
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                         binding.TodayWeather.setLayoutManager(linearLayoutManager);
 
-//                        HourlyWeatherAdapter adapter = new HourlyWeatherAdapter(dataList);
-//                        binding.TodayWeather.setAdapter(adapter);
+
+                        HourlyWeatherAdapter adapter = new HourlyWeatherAdapter(list);
+                        binding.TodayWeather.setAdapter(adapter);
 
                         Toast.makeText(getContext(), "定位失败,请检查定位是否开启", Toast.LENGTH_SHORT).show();
                     }

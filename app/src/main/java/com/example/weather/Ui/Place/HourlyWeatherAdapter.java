@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.weather.Logic.netWorkUtil.HourlyWeatherData;
+import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherData;
 import com.example.weather.R;
 import com.example.weather.TestTool.LogUtil;
 import com.example.weather.databinding.TodayWeatherItemBinding;

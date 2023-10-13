@@ -1,6 +1,6 @@
-package com.example.weather.Logic.netWorkUtil;
+package com.example.weather.Logic.netWorkUtil.LocationAndCity;
 
-import com.example.weather.Ui.Place.PlaceViewModel.DataCallback;
+import com.example.weather.Logic.netWorkUtil.GenericUtility;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * 文件名: Utility
  * 创建者: lukecc0
  * 创建时间:2023/9/19 下午3:01
- * 描述: 获取天气状态
+ * 描述: 获取近7天的天气数据
  */
 
 public class WeatherUtility extends GenericUtility {

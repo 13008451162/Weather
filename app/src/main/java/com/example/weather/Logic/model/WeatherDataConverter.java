@@ -10,21 +10,23 @@ package com.example.weather.Logic.model;
 
 import androidx.room.TypeConverter;
 
-import com.example.weather.Logic.netWorkUtil.HourlyWeatherData;
+import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherData;
 import com.google.gson.Gson;
 
 
-public class WeatherDataConverter {
+public class WeatherDataConverter implements DataConverter<HourlyWeatherData.HourlyDTO >{
+    @Override
     @TypeConverter
-    public static HourlyWeatherData.HourlyDTO fromString(String value) {
+    public HourlyWeatherData.HourlyDTO fromString(String value) {
         if (value == null) {
             return null;
         }
         return new Gson().fromJson(value, HourlyWeatherData.HourlyDTO.class);
     }
 
+    @Override
     @TypeConverter
-    public static String fromDTO(HourlyWeatherData.HourlyDTO data) {
+    public String fromDTO(HourlyWeatherData.HourlyDTO data) {
         if (data == null) {
             return null;
         }

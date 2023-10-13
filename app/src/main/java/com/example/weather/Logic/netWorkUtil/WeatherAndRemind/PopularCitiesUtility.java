@@ -1,16 +1,10 @@
-package com.example.weather.Logic.netWorkUtil;
+package com.example.weather.Logic.netWorkUtil.WeatherAndRemind;
 
-import androidx.annotation.NonNull;
-
-import com.example.weather.Ui.Place.PlaceViewModel.DataCallback;
+import com.example.weather.Logic.netWorkUtil.GenericUtility;
 
 import com.google.gson.Gson;
 
-import java.io.IOException;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Response;
 
 /**
  * 项目名: weather

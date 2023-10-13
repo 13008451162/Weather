@@ -1,13 +1,11 @@
 package com.example.weather.Logic.dao;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
 
-import com.example.weather.Logic.model.TwentyFourHourWeatherData;
-import com.example.weather.Logic.netWorkUtil.HourlyWeatherData;
+import com.example.weather.Logic.model.TwentyFourHourWeatherDataModel;
+import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherData;
 
 import java.util.List;
 
@@ -16,29 +14,23 @@ import java.util.List;
  * 文件名: WeatherDatadao
  * 创建者: lukecc0
  * 创建时间:2023/10/8 下午9:33
- * 描述: WeatherData的Dao层
+ * 描述: 保存24小时天气情况TwentyFourHourWeatherData的Dao层
  */
 
 @Dao
 public interface TwentyFourHourWeatherDataDao {
 
     @Insert
-    void insertData(TwentyFourHourWeatherData...weatherData);
+    void insertData(TwentyFourHourWeatherDataModel...weatherData);
 
-    @Query("SELECT * FROM TwentyFourHourWeatherData WHERE id = :id")
-    TwentyFourHourWeatherData getUserName(int id); // 在这里使用相同的参数名
-
-    @Query("delete from TwentyFourHourWeatherData")
+    @Query("delete from TwentyFourHourWeatherDataModel")
     void deleteAll();
-
-    @Update
-    public void update(TwentyFourHourWeatherData weatherData);
 
     /**
      * 获取数据链表
      * @return
      */
-    @Query("SELECT data FROM TwentyFourHourWeatherData")
+    @Query("SELECT data FROM TwentyFourHourWeatherDataModel")
     List<HourlyWeatherData.HourlyDTO> getAllData();
 
 }

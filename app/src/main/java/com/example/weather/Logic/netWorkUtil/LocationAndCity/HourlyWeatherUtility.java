@@ -1,5 +1,6 @@
-package com.example.weather.Logic.netWorkUtil;
+package com.example.weather.Logic.netWorkUtil.LocationAndCity;
 
+import com.example.weather.Logic.netWorkUtil.GenericUtility;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * 文件名: HourlyWeatherUtility
  * 创建者: lukecc0
  * 创建时间:2023/10/7 下午9:08
- * 描述: TODO
+ * 描述: 获取24小时内的天气情况
  */
 
 public class HourlyWeatherUtility extends GenericUtility {

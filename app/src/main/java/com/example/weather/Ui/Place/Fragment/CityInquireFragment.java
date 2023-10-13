@@ -18,11 +18,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.weather.Ui.Place.PlaceAdapter;
 import com.example.weather.Ui.Place.PlaceViewModel.DataCallback;
-import com.example.weather.Logic.netWorkUtil.LocationData;
+import com.example.weather.Logic.netWorkUtil.WeatherAndRemind.LocationData;
 import com.example.weather.TestTool.LogUtil;
-import com.example.weather.Logic.netWorkUtil.LocationUtility;
-import com.example.weather.Logic.netWorkUtil.PopularCitiesData;
-import com.example.weather.Logic.netWorkUtil.PopularCitiesUtility;
+import com.example.weather.Logic.netWorkUtil.WeatherAndRemind.LocationUtility;
+import com.example.weather.Logic.netWorkUtil.WeatherAndRemind.PopularCitiesData;
+import com.example.weather.Logic.netWorkUtil.WeatherAndRemind.PopularCitiesUtility;
 import com.example.weather.Ui.Place.PlaceViewModel.CityUiViewmodel;
 import com.example.weather.Ui.Place.PopularCitiesAdapter;
 import com.example.weather.WeatherApplication;

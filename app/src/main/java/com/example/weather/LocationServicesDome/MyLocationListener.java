@@ -72,7 +72,6 @@ public class MyLocationListener extends BDAbstractLocationListener {
                 longitude + "," + latitude
         );
 
-
     }
 
 }

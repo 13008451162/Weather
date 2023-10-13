@@ -2,7 +2,7 @@ package com.example.weather.Ui.Place.PlaceViewModel;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.weather.Logic.netWorkUtil.PopularCitiesData;
+import com.example.weather.Logic.netWorkUtil.WeatherAndRemind.PopularCitiesData;
 
 import java.util.List;
 

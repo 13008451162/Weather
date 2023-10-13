@@ -48,7 +48,6 @@ public class WeatherApplication extends Application {
 
         WeatherDataInquireTool.dpHourWeatherDatabase = TwentyFourHourWeatherDatabase.getInstance(context);
 
-
         // 同意Baidu地图SDK的隐私协议,这个非常重要
         SDKInitializer.setAgreePrivacy(getApplicationContext(), true);
         //同意客户端隐私情况

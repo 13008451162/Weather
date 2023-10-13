@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,16 +16,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.weather.Logic.WeatherDataInquireTool;
-import com.example.weather.Logic.model.TwentyFourHourWeatherDatabase;
-import com.example.weather.Logic.netWorkUtil.HourlyWeatherData;
 import com.example.weather.Ui.SearchActivity;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
-
-    private static final String TAG = "haojinhui";
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;  //给予位置权限
 
@@ -36,22 +26,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        WeatherDataInquireTool.dpHourWeatherDatabase = TwentyFourHourWeatherDatabase.getInstance(this);
 
 
         //显示出操作栏
         Toolbar toolbar = findViewById(R.id.toolbar);
 
-
-//        toolbar.setOnClickListener((v) -> {
-//            new Thread(() -> {
-//                List<HourlyWeatherData.HourlyDTO> allData = WeatherDataInquireTool.dpHourWeatherDatabase.weatherDataDao().getAllData();
-//                Log.e(TAG, "onCreate: " + allData.size());
-//                for (HourlyWeatherData.HourlyDTO allDatum : allData) {
-//                    Log.e(TAG, "onCreate: " + allDatum);
-//                }
-//            }).start();
-//        });
         setSupportActionBar(toolbar);
 
 
@@ -64,20 +43,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        // 测试没问题
-//        TwentyFourHourWeatherDataDao dao = TwentyFourHourWeatherDatabase.getInstance().weatherDataDao();
-//        TwentyFourHourWeatherData data = new TwentyFourHourWeatherData();
-//        new Thread(() -> {
-//            dao.insertData(data, data, data);
-//        }).start();
-//        new Thread(() -> {
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-//            Log.e(TAG, "onCreate: haojinhui: " + dao.getAllData());
-//        }).start();
     }
 
 

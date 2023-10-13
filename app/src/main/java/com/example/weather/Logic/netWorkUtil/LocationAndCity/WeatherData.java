@@ -1,4 +1,4 @@
-package com.example.weather.Logic.netWorkUtil;
+package com.example.weather.Logic.netWorkUtil.LocationAndCity;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -35,21 +35,6 @@ public class WeatherData {
     @SerializedName("daily")
     private List<DailyDTO> daily;
 
-    // 引用信息，包括数据来源和许可信息
-    @SerializedName("refer")
-    private ReferDTO refer;
-
-    @NoArgsConstructor
-    @Data
-    public static class ReferDTO {
-        // 原始数据来源，或数据源说明
-        @SerializedName("sources")
-        private List<String> sources;
-
-        // 数据许可或版权声明
-        @SerializedName("license")
-        private List<String> license;
-    }
 
     @NoArgsConstructor
     @Data
@@ -308,14 +293,4 @@ public class WeatherData {
         return daily;
     }
 
-    @Override
-    public String toString() {
-        return "WeatherData{" +
-                "code='" + code + '\'' +
-                ", updateTime='" + updateTime + '\'' +
-                ", fxLink='" + fxLink + '\'' +
-                ", daily=" + daily +
-                ", refer=" + refer +
-                '}';
-    }
 }

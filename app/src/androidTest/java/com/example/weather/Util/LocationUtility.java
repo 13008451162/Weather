@@ -1,6 +1,6 @@
 package com.example.weather.Util;
 
-import com.example.weather.Logic.netWorkUtil.LocationData;
+import com.example.weather.Logic.netWorkUtil.WeatherAndRemind.LocationData;
 import com.google.gson.Gson;
 
 import org.junit.Test;

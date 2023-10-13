@@ -8,8 +8,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.weather.Logic.netWorkUtil.LocationData;
-import com.example.weather.Logic.netWorkUtil.PopularCitiesData;
+import com.example.weather.Logic.netWorkUtil.WeatherAndRemind.PopularCitiesData;
 import com.example.weather.R;
 import com.example.weather.WeatherApplication;
 import com.example.weather.databinding.PopularCitiesItemBinding;

@@ -1,4 +1,4 @@
-package com.example.weather.Logic.netWorkUtil;
+package com.example.weather.Logic.netWorkUtil.LocationAndCity;
 
 import com.google.gson.annotations.SerializedName;
 
