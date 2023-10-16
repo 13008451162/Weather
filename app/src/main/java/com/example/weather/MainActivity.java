@@ -1,11 +1,15 @@
 package com.example.weather;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,16 +37,34 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-
+        Log.d("TAG","12");
         // 动态请求位置权限
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.d("TAG","1234");
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+        }
+
+        //判断网络情况
+        if(!isNetworkConnected(this)){
+            Toast.makeText(this,"网络出错了,请检查网络链接", Toast.LENGTH_SHORT).show();
         }
 
         //设置导航栏
         setSupportActionBar(toolbar);
 
 
+    }
+
+    // 判断网络连接状态
+    public boolean isNetworkConnected(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null) {
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+                return true; // 有可用网络连接
+            }
+        }
+        return false; // 没有可用网络连接
     }
 
 
@@ -55,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
                 // 用户同意了位置权限，初始化地图等操作
             } else {
                 // 用户拒绝了位置权限，你可以给予适当的提示或处理
-                Log.e("Permission", "Location permission denied");
+                Toast.makeText(this, "定位出现问题了，请检查定位是否开启", Toast.LENGTH_SHORT).show();
+
             }
         }
     }

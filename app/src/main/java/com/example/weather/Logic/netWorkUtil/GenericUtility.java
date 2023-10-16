@@ -3,6 +3,7 @@ package com.example.weather.Logic.netWorkUtil;
 
 import androidx.annotation.NonNull;
 
+import com.example.weather.TestTool.LogUtil;
 import com.example.weather.Ui.Place.PlaceViewModel.DataCallback;
 
 import java.io.IOException;
@@ -51,8 +52,6 @@ public abstract class GenericUtility<T>{
                          }
                      } catch (Exception e) {
                          e.printStackTrace();
-                     } finally {
-                         utility = null;
                      }
                  }
              }

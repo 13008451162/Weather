@@ -1,6 +1,8 @@
 package com.example.weather.Logic.netWorkUtil.LocationAndCity;
 
 import com.example.weather.Logic.netWorkUtil.GenericUtility;
+import com.example.weather.TestTool.LogUtil;
+import com.example.weather.Ui.Place.PlaceViewModel.DataCallback;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -33,7 +35,7 @@ public class SevenDayWeatherUtility extends GenericUtility {
         Gson gson = new Gson();
 
         try {
-            data = gson.fromJson(jsonData, WeatherData.class);
+            data = gson.fromJson(jsonData, SevenDayWeatherData.class);
             return true;
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
@@ -45,4 +47,5 @@ public class SevenDayWeatherUtility extends GenericUtility {
     public List getDataList() {
         return ((SevenDayWeatherData)data).getDaily();
     }
+
 }

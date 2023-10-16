@@ -56,9 +56,9 @@ public class HourlyWeatherAdapter extends RecyclerView.Adapter<HourlyWeatherAdap
 
         if (matcher.find()) {
             String time = matcher.group(1);
-            LogUtil.d("USSA", time);
             holder.binding.hour.setText(time);
         }
+
         //设置图片
 //        holder.binding.img.setImageResource();
 

@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import com.example.weather.Logic.model.Converter.TwentyFourWeatherDataConverter;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherData;
 
 /**
@@ -16,7 +17,7 @@ import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherData;
  */
 
 @Entity
-@TypeConverters(WeatherDataConverter.class)
+@TypeConverters(TwentyFourWeatherDataConverter.class)
 public class TwentyFourHourWeatherDataModel {
     @PrimaryKey(autoGenerate = true)
     public int id;

@@ -1,4 +1,4 @@
-package com.example.weather.Logic.model;
+package com.example.weather.Logic.model.Converter;
 
 /**
  * 项目名: weather
@@ -14,7 +14,7 @@ import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherData;
 import com.google.gson.Gson;
 
 
-public class WeatherDataConverter implements DataConverter<HourlyWeatherData.HourlyDTO >{
+public class TwentyFourWeatherDataConverter implements DataConverter<HourlyWeatherData.HourlyDTO >{
     @Override
     @TypeConverter
     public HourlyWeatherData.HourlyDTO fromString(String value) {

@@ -1,13 +1,12 @@
 package com.example.weather.Ui.Place.PlaceViewModel;
 
 import android.app.Activity;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.weather.Logic.WeatherDataInquireTool;
-import com.example.weather.Logic.model.TwentyFourHourWeatherDataModel;
-import com.example.weather.Logic.model.TwentyFourHourWeatherDatabase;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherData;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherUtility;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.SevenDayWeatherData;
@@ -28,22 +27,22 @@ import java.util.List;
 public class CityWeatherViewModel extends ViewModel {
     private Activity requireActivity;
 
-    MutableLiveData<SevenDayWeatherData.DailyDTO> sevenDayWeatherLiveData = new MutableLiveData<>();
+    //检测近7天的天气变化情况
+    private MutableLiveData<List<SevenDayWeatherData.DailyDTO>> sevenDayWeatherLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<HourlyWeatherData.HourlyDTO>> hourWeatherLiveData = new MutableLiveData<>();
 
-    public Activity setRequireActivity() {
-        return requireActivity;
-    }
 
     public void setRequireActivity(Activity activity) {
         this.requireActivity = activity;
     }
+
 
     /**
      * 获取当前24小时的天气情况
      *
      * @return 返回保存天气情况的链表
      */
-    public void getHourlyDTo(String Location, DataCallback<HourlyWeatherData.HourlyDTO> callback) {
+    public MutableLiveData<List<HourlyWeatherData.HourlyDTO>> getHourlyDTo(String Location) {
 
 
         //获取天气的地址
@@ -51,72 +50,49 @@ public class CityWeatherViewModel extends ViewModel {
 
 
         HourlyWeatherUtility utility = new HourlyWeatherUtility();
-        LogUtil.d("sunwenyu", "dataList.toString()1");
 
         utility.sendAddress(address, new DataCallback<HourlyWeatherData.HourlyDTO>() {
 
             @Override
             public void onSuccess(List<HourlyWeatherData.HourlyDTO> dataList) {
-
-                SplitList(dataList);
-
-                callback.onSuccess(dataList);
+                WeatherDataInquireTool.HourSplitList(dataList);
+                hourWeatherLiveData.postValue(dataList);
             }
 
             @Override
             public void onFailure(IOException e) {
-                callback.onFailure(e);
+                hourWeatherLiveData.postValue(WeatherDataInquireTool.dpHourWeatherDatabase.weatherDataDao().getAllData());
             }
-
         });
-    }
 
-    /**
-     * 使用Room保存24小时的天气情况
-     *
-     * @param dataList
-     */
-    public void SplitList(List<HourlyWeatherData.HourlyDTO> dataList) {
-        LogUtil.d("sunwenyu", "dataList.toString()2");
-
-        if (TwentyFourHourWeatherDatabase.Getinstance() != null) {
-            LogUtil.d("sunwenyu", "dataList.toString()3");
-            WeatherDataInquireTool.dpHourWeatherDatabase.weatherDataDao().deleteAll();
-
-            for (HourlyWeatherData.HourlyDTO dto : dataList) {
-//            TwentyFourHourWeatherDataModel weatherData = new TwentyFourHourWeatherDataModel();
-//            weatherData.data = dto;
-//            WeatherDataInquireTool.dpHourWeatherDatabase.weatherDataDao().insertData(weatherData);
-                LogUtil.d("sunwenyu", dto.toString());
-            }
-        }else {
-            LogUtil.d("sunwenyu", dataList.toString());
-        }
+        return hourWeatherLiveData;
     }
 
     /**
      * 获取7日内的天气情况
      *
-     * @param Location
+     * @param Location 地址
      */
-    public void getSevenDayWeather(String Location) {
+    public MutableLiveData<List<SevenDayWeatherData.DailyDTO>> getSevenDayWeather(String Location) {
         //获取天气的地址
-        String address = "https://devapi.qweather.com/v7/weather/24h?location=" + Location + "&key=64f323b501dc410cb7ec4fd1b503aab4";
-
+        String address = "https://devapi.qweather.com/v7/weather/7d?location=" + Location + "&key=64f323b501dc410cb7ec4fd1b503aab4";
 
         SevenDayWeatherUtility utility = new SevenDayWeatherUtility();
 
-        utility.sendAddress(address, new DataCallback() {
-            @Override
-            public void onSuccess(List dataList) {
+        utility.sendAddress(address, new DataCallback<SevenDayWeatherData.DailyDTO>() {
 
-                sevenDayWeatherLiveData.postValue((SevenDayWeatherData.DailyDTO) dataList);
+            @Override
+            public void onSuccess(List<SevenDayWeatherData.DailyDTO> dataList) {
+
+                WeatherDataInquireTool.DaySplitList(dataList);
+                sevenDayWeatherLiveData.postValue(dataList);
             }
 
             @Override
             public void onFailure(IOException e) {
-
+                sevenDayWeatherLiveData.postValue(WeatherDataInquireTool.dpDayWeatherDatabase.weatherDataDao().getAllData());
             }
         });
+        return sevenDayWeatherLiveData;
     }
 }

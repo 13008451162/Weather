@@ -9,7 +9,8 @@ import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
 import com.example.weather.LocationServicesDome.MyLocationListener;
 import com.example.weather.Logic.WeatherDataInquireTool;
-import com.example.weather.Logic.model.TwentyFourHourWeatherDatabase;
+import com.example.weather.Logic.model.base.SeverDayWeatherDatabase;
+import com.example.weather.Logic.model.base.TwentyFourHourWeatherDatabase;
 
 /**
  * 项目名: weather
@@ -46,7 +47,8 @@ public class WeatherApplication extends Application {
         // 获取context
         context = this;
 
-        WeatherDataInquireTool.dpHourWeatherDatabase = TwentyFourHourWeatherDatabase.getInstance(context);
+        //启动所有的数据库,获取数据库持有
+        StartDatabase();
 
         // 同意Baidu地图SDK的隐私协议,这个非常重要
         SDKInitializer.setAgreePrivacy(getApplicationContext(), true);
@@ -92,5 +94,19 @@ public class WeatherApplication extends Application {
 
     public static Context getContext() {
         return context;
+    }
+
+
+    /**
+     * 启动所有的数据库
+     */
+    private static void StartDatabase(){
+
+        //24小时天气的数据
+        WeatherDataInquireTool.dpHourWeatherDatabase = TwentyFourHourWeatherDatabase.getInstance(context);
+
+        //7天内的数据
+        WeatherDataInquireTool.dpDayWeatherDatabase = SeverDayWeatherDatabase.getInstance(context);
+
     }
 }

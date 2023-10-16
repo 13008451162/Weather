@@ -1,4 +1,4 @@
-package com.example.weather.Logic.model;
+package com.example.weather.Logic.model.Converter;
 
 import androidx.room.TypeConverter;
 

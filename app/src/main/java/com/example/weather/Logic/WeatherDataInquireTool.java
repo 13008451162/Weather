@@ -1,10 +1,13 @@
 package com.example.weather.Logic;
 
+import com.example.weather.Logic.dao.SeverDayWeatherDataDao;
+import com.example.weather.Logic.dao.TwentyFourHourWeatherDataDao;
+import com.example.weather.Logic.model.SevenDayWeatherDataModel;
 import com.example.weather.Logic.model.TwentyFourHourWeatherDataModel;
-import com.example.weather.Logic.model.TwentyFourHourWeatherDatabase;
+import com.example.weather.Logic.model.base.SeverDayWeatherDatabase;
+import com.example.weather.Logic.model.base.TwentyFourHourWeatherDatabase;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherData;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.SevenDayWeatherData;
-import com.example.weather.WeatherApplication;
 
 import java.util.List;
 
@@ -19,30 +22,41 @@ import java.util.List;
 public class WeatherDataInquireTool {
 
     public static TwentyFourHourWeatherDatabase dpHourWeatherDatabase;
-//    public static SevenDayWeatherDatabase
+    public static SeverDayWeatherDatabase dpDayWeatherDatabase;
 
-//    /**
-//     * 使用Room保存24小时的天气情况
-//     * @param dataList
-//     */
-//    public void saveTwentyFourHourData(List<HourlyWeatherData.HourlyDTO> dataList) {
-//        WeatherDataInquireTool.dpHourWeatherDatabase.weatherDataDao().deleteAll();
-//
-//        for (HourlyWeatherData.HourlyDTO dto : dataList) {
-//            TwentyFourHourWeatherDataModel weatherData = new TwentyFourHourWeatherDataModel();
-//            weatherData.data = dto;
-//            WeatherDataInquireTool.dpHourWeatherDatabase.weatherDataDao().insertData(weatherData);
-//        }
-//
-//    }
-//
-//    /**
-//     * 使用Room保存7天的天气情况
-//     * @param dataList
-//     */
-//    public void saveSevenDayData(List<SevenDayWeatherData.DailyDTO> dataList) {
-//        // 实现7天天气数据保存逻辑
-//
-//    }
+    /**
+     * 使用Room保存24小时的天气情况
+     * @param dataList 需要保存的数据
+     */
+    public static void HourSplitList(List<HourlyWeatherData.HourlyDTO> dataList) {
+
+        TwentyFourHourWeatherDataDao dao = WeatherDataInquireTool.dpHourWeatherDatabase.weatherDataDao();
+
+        dao.deleteAll();
+
+        for (HourlyWeatherData.HourlyDTO dto : dataList) {
+
+            //添加数据
+            TwentyFourHourWeatherDataModel twentyFourHourWeatherDataModel = new TwentyFourHourWeatherDataModel();
+            twentyFourHourWeatherDataModel.data = dto;
+            dao.insertData(twentyFourHourWeatherDataModel);
+        }
+    }
+
+    public static void DaySplitList(List<SevenDayWeatherData.DailyDTO> dataList){
+
+        SeverDayWeatherDataDao dao = WeatherDataInquireTool.dpDayWeatherDatabase.weatherDataDao();
+        dao.deleteAll();
+
+        for(SevenDayWeatherData.DailyDTO dto : dataList){
+
+            //添加数据
+            SevenDayWeatherDataModel sevenDayWeatherDataModel = new SevenDayWeatherDataModel();
+            sevenDayWeatherDataModel.data = dto;
+            dao.insertData(sevenDayWeatherDataModel);
+        }
+    }
+
+
 
 }

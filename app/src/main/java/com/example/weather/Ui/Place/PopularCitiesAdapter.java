@@ -40,16 +40,13 @@ public class PopularCitiesAdapter extends RecyclerView.Adapter<PopularCitiesAdap
         final PopularCitiesAdapter.ViewHolder holder = new PopularCitiesAdapter.ViewHolder(view);
 
         //注册外层监听事件
-        holder.PopularView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //通过hold可以获取适配器的位置
-                int position = holder.getAdapterPosition();
+        holder.PopularView.setOnClickListener(view1 -> {
+            //通过hold可以获取适配器的位置
+            int position = holder.getAdapterPosition();
 
-                //取得相应的经纬度
-                PopularCitiesData.TopCityListDTO cityListDTO = mPopularData.get(position);
-                Toast.makeText(WeatherApplication.getContext(),cityListDTO.getName(),Toast.LENGTH_SHORT).show();
-            }
+            //取得相应的经纬度
+            PopularCitiesData.TopCityListDTO cityListDTO = mPopularData.get(position);
+            Toast.makeText(WeatherApplication.getContext(),cityListDTO.getName(),Toast.LENGTH_SHORT).show();
         });
 
         return holder;

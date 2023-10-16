@@ -3,7 +3,9 @@ package com.example.weather.Logic.model;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
+import com.example.weather.Logic.model.Converter.SeverDayWeatherDataConverter;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.SevenDayWeatherData;
 
 /**
@@ -14,11 +16,12 @@ import com.example.weather.Logic.netWorkUtil.LocationAndCity.SevenDayWeatherData
  * 描述: 保存近7天天气的数据
  */
 @Entity
+@TypeConverters(SeverDayWeatherDataConverter.class)
 public class SevenDayWeatherDataModel {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
     @ColumnInfo
-    public SevenDayWeatherData.DailyDTO dailyDTO;
+    public SevenDayWeatherData.DailyDTO data;
 
 }
