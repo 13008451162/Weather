@@ -1,6 +1,6 @@
 package com.example.weather.Util;
 
-import com.example.weather.Logic.netWorkUtil.LocationAndCity.WeatherData;
+import com.example.weather.Logic.netWorkUtil.LocationAndCity.AdviseData;
 import com.google.gson.Gson;
 
 import org.junit.Test;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class WeatherUtility {
 
-    private WeatherData DayWeatherSum;
+    private AdviseData DayWeatherSum;
 
     private String jsonData = "{\n" +
             "    \"code\": \"200\",\n" +
@@ -258,7 +258,7 @@ public class WeatherUtility {
 
         try{
             // 使用 Gson 解析 JSON 数据,将JSON数据解析为WeatherData对象
-            DayWeatherSum = gson.fromJson(jsonData, WeatherData.class);
+            DayWeatherSum = gson.fromJson(jsonData, AdviseData.class);
             return true;
         }catch (Exception e){
             e.printStackTrace();
@@ -267,7 +267,7 @@ public class WeatherUtility {
     }
 
     //获取每日天气
-    public List<WeatherData.DailyDTO> getDailyWeatherList() {
+    public List<AdviseData.DailyDTO> getDailyWeatherList() {
         return DayWeatherSum.getDaily();
     }
 
@@ -278,7 +278,7 @@ public class WeatherUtility {
      * fxLink 当前数据的响应式页面，便于嵌入网站或应用
      * @return
      */
-    public WeatherData getDayWeatherSum() {
+    public AdviseData getDayWeatherSum() {
         return DayWeatherSum;
     }
 }

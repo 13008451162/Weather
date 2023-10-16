@@ -3,6 +3,7 @@ package com.example.weather;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;  //给予位置权限
 
+    private static Typeface font;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,22 +39,27 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        Log.d("TAG","12");
+        Log.d("TAG", "12");
         // 动态请求位置权限
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Log.d("TAG","1234");
+            Log.d("TAG", "1234");
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         }
 
         //判断网络情况
-        if(!isNetworkConnected(this)){
-            Toast.makeText(this,"网络出错了,请检查网络链接", Toast.LENGTH_SHORT).show();
+        if (!isNetworkConnected(this)) {
+            Toast.makeText(this, "网络出错了,请检查网络链接", Toast.LENGTH_SHORT).show();
         }
 
         //设置导航栏
         setSupportActionBar(toolbar);
 
+        font = Typeface.createFromAsset(getAssets(), "qweather-icons.ttf");//加载图标字体
 
+    }
+
+    public static Typeface getFont() {
+        return font;
     }
 
     // 判断网络连接状态

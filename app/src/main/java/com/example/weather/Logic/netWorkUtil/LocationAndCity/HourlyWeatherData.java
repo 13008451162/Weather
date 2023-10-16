@@ -41,6 +41,16 @@ public class HourlyWeatherData {
         @SerializedName("text")
         private String text;
 
+        public HourlyDTO(HourlyDTO hourlyDTO) {
+            this.fxTime = hourlyDTO.fxTime;
+            this.icon = hourlyDTO.icon;
+            this.text = hourlyDTO.text;
+            this.temp = hourlyDTO.temp;
+        }
+
+        public HourlyDTO() {
+        }
+
         public String getFxTime() {
             return fxTime;
         }
@@ -55,6 +65,22 @@ public class HourlyWeatherData {
 
         public String getText() {
             return text;
+        }
+
+        public void setFxTime(String fxTime) {
+            this.fxTime = fxTime;
+        }
+
+        public void setTemp(String temp) {
+            this.temp = temp;
+        }
+
+        public void setIcon(String icon) {
+            this.icon = icon;
+        }
+
+        public void setText(String text) {
+            this.text = text;
         }
 
         @Override

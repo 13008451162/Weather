@@ -1,12 +1,15 @@
 package com.example.weather.Ui.Place.PlaceViewModel;
 
 import android.app.Activity;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.weather.Logic.WeatherDataInquireTool;
+import com.example.weather.Logic.netWorkUtil.LocationAndCity.AdviseData;
+import com.example.weather.Logic.netWorkUtil.LocationAndCity.AdviseDataUtility;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherData;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherUtility;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.SevenDayWeatherData;
@@ -31,6 +34,8 @@ public class CityWeatherViewModel extends ViewModel {
     private MutableLiveData<List<SevenDayWeatherData.DailyDTO>> sevenDayWeatherLiveData = new MutableLiveData<>();
     private MutableLiveData<List<HourlyWeatherData.HourlyDTO>> hourWeatherLiveData = new MutableLiveData<>();
 
+    private MutableLiveData<List<AdviseData.DailyDTO>> adviseWeatherLiveData = new MutableLiveData<>();
+
 
     public void setRequireActivity(Activity activity) {
         this.requireActivity = activity;
@@ -39,7 +44,6 @@ public class CityWeatherViewModel extends ViewModel {
 
     /**
      * 获取当前24小时的天气情况
-     *
      * @return 返回保存天气情况的链表
      */
     public MutableLiveData<List<HourlyWeatherData.HourlyDTO>> getHourlyDTo(String Location) {
@@ -70,7 +74,6 @@ public class CityWeatherViewModel extends ViewModel {
 
     /**
      * 获取7日内的天气情况
-     *
      * @param Location 地址
      */
     public MutableLiveData<List<SevenDayWeatherData.DailyDTO>> getSevenDayWeather(String Location) {
@@ -94,5 +97,28 @@ public class CityWeatherViewModel extends ViewModel {
             }
         });
         return sevenDayWeatherLiveData;
+    }
+
+    public MutableLiveData<List<AdviseData.DailyDTO>> getAdviseWeatherLiveData(String Location){
+        //获取天气的地址
+        String address = "https://devapi.qweather.com/v7/indices/1d?type=1,2,3,4,6,7,8,9,5&location="+ Location +"&key=64f323b501dc410cb7ec4fd1b503aab4";
+
+        AdviseDataUtility utility = new AdviseDataUtility();
+
+        utility.sendAddress(address, new DataCallback<AdviseData.DailyDTO>() {
+
+            @Override
+            public void onSuccess(List<AdviseData.DailyDTO> dataList) {
+
+                WeatherDataInquireTool.AdviseSplitList(dataList);
+                adviseWeatherLiveData.postValue(dataList);
+            }
+
+            @Override
+            public void onFailure(IOException e) {
+                adviseWeatherLiveData.postValue(WeatherDataInquireTool.dpAdviseDatabase.WeatherDataDao().getAllData());
+            }
+        });
+        return adviseWeatherLiveData;
     }
 }

@@ -18,6 +18,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/NowTemp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="35dp"
@@ -26,6 +27,7 @@
                 android:textSize="90dp" />
 
             <TextView
+                android:id="@+id/NowTempAndsugg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -34,7 +36,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 app:cardBackgroundColor="@android:color/transparent"
@@ -49,21 +51,24 @@
 
                     <ImageView
                         android:layout_width="40dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="35dp"
                         android:layout_gravity="center"
                         android:scaleType="centerCrop"
                         android:src="@drawable/danger" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:id="@+id/NowAdvise"
+                        android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:ellipsize="end"
                         android:gravity="center"
-                        android:text="地质灾害风险黄色预警"
-                        android:textSize="14dp" />
+                        android:maxLines="1"
+                        android:textSize="14sp" />
 
                     <ImageView
-                        android:layout_width="35dp"
+                        android:layout_width="15dp"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -98,7 +103,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/futureWeater"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp">
+                    android:layout_height="250dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -115,8 +120,8 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_marginStart="25dp"
                     android:layout_gravity="center"
+                    android:layout_marginStart="25dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="15dp">
 
@@ -126,25 +131,26 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/uvIndexImg"
+                            android:layout_marginTop="5dp"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/set" />
+                            android:src="@drawable/uv" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginTop="2dp"
                             android:text="紫外线"
                             android:textSize="12dp" />
 
                         <TextView
+                            android:id="@+id/GridUv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginTop="2dp"
                             android:text="0"
                             android:textSize="15dp" />
 
@@ -155,8 +161,8 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
+                    android:layout_gravity="center"
                     android:layout_marginStart="25dp"
-                    android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="15dp">
 
@@ -166,141 +172,26 @@
                         android:orientation="vertical">
 
                         <ImageView
+                            android:layout_marginTop="5dp"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/set" />
+                            android:src="@drawable/precipitation" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="4dp"
-                            android:text="紫外线"
+                            android:text="降水量"
                             android:textSize="12dp" />
 
                         <TextView
+                            android:id="@+id/GridPrecipitation"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="4dp"
-                            android:text="0"
-                            android:textSize="15dp" />
-
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="15dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/set" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="4dp"
-                            android:text="紫外线"
-                            android:textSize="12dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="4dp"
-                            android:text="0"
-                            android:textSize="15dp" />
-
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginStart="25dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="15dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/set" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="4dp"
-                            android:text="紫外线"
-                            android:textSize="12dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="4dp"
-                            android:text="0"
-                            android:textSize="15dp" />
-
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginStart="25dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="15dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/set" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="4dp"
-                            android:text="紫外线"
-                            android:textSize="12dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginTop="2dp"
                             android:text="0"
                             android:textSize="15dp" />
 
@@ -322,20 +213,145 @@
                         android:orientation="vertical">
 
                         <ImageView
+                            android:layout_marginTop="5dp"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/set" />
+                            android:src="@drawable/humidity" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="4dp"
-                            android:text="紫外线"
+                            android:text="相对湿度"
                             android:textSize="12dp" />
 
                         <TextView
+                            android:id="@+id/GridHumidity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="2dp"
+                            android:text="0"
+                            android:textSize="15dp" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_marginTop="8dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/pressure" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="4dp"
+                            android:text="大气压强"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:id="@+id/GridPressure"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="2dp"
+                            android:text="0"
+                            android:textSize="15dp" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_marginTop="5dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/visibility" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="4dp"
+                            android:text="能见度"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:id="@+id/GridVisbility"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="2dp"
+                            android:text="0"
+                            android:textSize="15dp" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="15dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_marginTop="5dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/cloud" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="2dp"
+                            android:text="云量"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:id="@+id/GridCloud"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -372,7 +388,8 @@
                         app:cardBackgroundColor="@android:color/transparent"
                         app:strokeColor="#87CEEB"
                         app:strokeWidth="1dp">
-                    <TextView
+
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
@@ -399,15 +416,17 @@
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
+                                android:layout_marginTop="5dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/set" />
+                                android:src="@drawable/sports" />
 
                             <TextView
+                                android:id="@+id/Sports"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="12dp"
-                                android:text="紫外线"
+                                android:text="运动建议"
                                 android:textSize="12sp" />
 
                         </LinearLayout>
@@ -423,15 +442,17 @@
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
+                                android:layout_marginTop="5dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/set" />
+                                android:src="@drawable/car_wash" />
 
                             <TextView
+                                android:id="@+id/CarWash"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="12dp"
-                                android:text="紫外线"
+                                android:text="洗车"
                                 android:textSize="12sp" />
 
                         </LinearLayout>
@@ -447,15 +468,17 @@
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
+                                android:layout_marginTop="5dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/set" />
+                                android:src="@drawable/dressing" />
 
                             <TextView
+                                android:id="@+id/Dressing"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="12dp"
-                                android:text="紫外线"
+                                android:text="穿衣"
                                 android:textSize="12sp" />
 
                         </LinearLayout>
@@ -471,40 +494,17 @@
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
+                                android:layout_marginTop="5dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/set" />
+                                android:src="@drawable/fishing" />
 
                             <TextView
+                                android:id="@+id/Fishing"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="12dp"
-                                android:text="紫外线"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_marginStart="13dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="15dp"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/set" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="12dp"
-                                android:text="紫外线"
+                                android:text="钓鱼"
                                 android:textSize="12sp" />
 
                         </LinearLayout>
@@ -521,15 +521,44 @@
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
+                                android:layout_marginTop="5dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/set" />
+                                android:src="@drawable/travel" />
 
                             <TextView
+                                android:id="@+id/Travel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="12dp"
-                                android:text="紫外线"
+                                android:text="旅游"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginStart="13dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="15dp"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/allergy" />
+
+                            <TextView
+                                android:id="@+id/Allergy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="12dp"
+                                android:text="过敏"
                                 android:textSize="12sp" />
 
                         </LinearLayout>
@@ -545,15 +574,17 @@
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
+                                android:layout_marginTop="5dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/set" />
+                                android:src="@drawable/comfortable" />
 
                             <TextView
+                                android:id="@+id/Comfortable"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="12dp"
-                                android:text="紫外线"
+                                android:text="舒适"
                                 android:textSize="12sp" />
 
                         </LinearLayout>
@@ -569,15 +600,17 @@
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
+                                android:layout_marginTop="5dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/set" />
+                                android:src="@drawable/cold" />
 
                             <TextView
+                                android:id="@+id/Cold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="12dp"
-                                android:text="紫外线"
+                                android:text="感冒"
                                 android:textSize="12sp" />
 
                         </LinearLayout>

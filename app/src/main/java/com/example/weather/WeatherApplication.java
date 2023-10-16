@@ -2,13 +2,16 @@ package com.example.weather;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Typeface;
 
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
+import com.example.weather.LocationServicesDome.LocationSearch;
 import com.example.weather.LocationServicesDome.MyLocationListener;
 import com.example.weather.Logic.WeatherDataInquireTool;
+import com.example.weather.Logic.model.base.AdviseDatabase;
 import com.example.weather.Logic.model.base.SeverDayWeatherDatabase;
 import com.example.weather.Logic.model.base.TwentyFourHourWeatherDatabase;
 
@@ -68,6 +71,10 @@ public class WeatherApplication extends Application {
             throw new RuntimeException(e);
         }
 
+        LocationSearch locationSearch = new LocationSearch();
+        locationSearch.Search("北京","北京上地十街10号");
+//        LocationSearch.reverseEncoding(34.163290267304646,108.91358047235403);
+
 
     }
 
@@ -107,6 +114,9 @@ public class WeatherApplication extends Application {
 
         //7天内的数据
         WeatherDataInquireTool.dpDayWeatherDatabase = SeverDayWeatherDatabase.getInstance(context);
+
+        //获取当日的建议
+        WeatherDataInquireTool.dpAdviseDatabase = AdviseDatabase.getInstance(context);
 
     }
 }

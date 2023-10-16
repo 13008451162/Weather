@@ -192,6 +192,114 @@ public class SevenDayWeatherData {
             return uvIndex;
         }
 
+        public void setFxDate(String fxDate) {
+            this.fxDate = fxDate;
+        }
+
+        public void setSunrise(String sunrise) {
+            this.sunrise = sunrise;
+        }
+
+        public void setSunset(String sunset) {
+            this.sunset = sunset;
+        }
+
+        public void setMoonrise(String moonrise) {
+            this.moonrise = moonrise;
+        }
+
+        public void setMoonset(String moonset) {
+            this.moonset = moonset;
+        }
+
+        public void setMoonPhase(String moonPhase) {
+            this.moonPhase = moonPhase;
+        }
+
+        public void setMoonPhaseIcon(String moonPhaseIcon) {
+            this.moonPhaseIcon = moonPhaseIcon;
+        }
+
+        public void setTempMax(String tempMax) {
+            this.tempMax = tempMax;
+        }
+
+        public void setTempMin(String tempMin) {
+            this.tempMin = tempMin;
+        }
+
+        public void setIconDay(String iconDay) {
+            this.iconDay = iconDay;
+        }
+
+        public void setTextDay(String textDay) {
+            this.textDay = textDay;
+        }
+
+        public void setIconNight(String iconNight) {
+            this.iconNight = iconNight;
+        }
+
+        public void setTextNight(String textNight) {
+            this.textNight = textNight;
+        }
+
+        public void setWind360Day(String wind360Day) {
+            this.wind360Day = wind360Day;
+        }
+
+        public void setWindDirDay(String windDirDay) {
+            this.windDirDay = windDirDay;
+        }
+
+        public void setWindScaleDay(String windScaleDay) {
+            this.windScaleDay = windScaleDay;
+        }
+
+        public void setWindSpeedDay(String windSpeedDay) {
+            this.windSpeedDay = windSpeedDay;
+        }
+
+        public void setWind360Night(String wind360Night) {
+            this.wind360Night = wind360Night;
+        }
+
+        public void setWindDirNight(String windDirNight) {
+            this.windDirNight = windDirNight;
+        }
+
+        public void setWindScaleNight(String windScaleNight) {
+            this.windScaleNight = windScaleNight;
+        }
+
+        public void setWindSpeedNight(String windSpeedNight) {
+            this.windSpeedNight = windSpeedNight;
+        }
+
+        public void setHumidity(String humidity) {
+            this.humidity = humidity;
+        }
+
+        public void setPrecip(String precip) {
+            this.precip = precip;
+        }
+
+        public void setPressure(String pressure) {
+            this.pressure = pressure;
+        }
+
+        public void setVis(String vis) {
+            this.vis = vis;
+        }
+
+        public void setCloud(String cloud) {
+            this.cloud = cloud;
+        }
+
+        public void setUvIndex(String uvIndex) {
+            this.uvIndex = uvIndex;
+        }
+
         @Override
         public String toString() {
             return "DailyDTO{" +

@@ -14,18 +14,18 @@ import java.util.List;
  * 描述: 获取近7天的天气数据
  */
 
-public class WeatherUtility extends GenericUtility {
+public class AdviseDataUtility extends GenericUtility {
 
-    public WeatherUtility(String jsonData) {
+    public AdviseDataUtility(String jsonData) {
         super(jsonData);
     }
 
-    public WeatherUtility() {
+    public AdviseDataUtility() {
     }
 
     @Override
     protected GenericUtility createUtility(String jsonData) {
-        return new WeatherUtility(jsonData);
+        return new AdviseDataUtility(jsonData);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class WeatherUtility extends GenericUtility {
         Gson gson = new Gson();
 
         try {
-            data = gson.fromJson(jsonData, WeatherData.class);
+            data = gson.fromJson(jsonData, AdviseData.class);
             return true;
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
@@ -43,7 +43,7 @@ public class WeatherUtility extends GenericUtility {
     }
 
     @Override
-    public List<WeatherData.DailyDTO> getDataList() {
-        return ((WeatherData)data).getDaily();
+    public List<AdviseData.DailyDTO> getDataList() {
+        return ((AdviseData)data).getDaily();
     }
 }

@@ -10,7 +10,7 @@ import com.google.gson.Gson;
  * 文件名: DataConverter
  * 创建者: lukecc0
  * 创建时间:2023/10/13 上午11:58
- * 描述: TODO
+ * 描述: 一个类型转化器，帮助Room进行数据类型的转化
  */
 
 public interface DataConverter<T> {

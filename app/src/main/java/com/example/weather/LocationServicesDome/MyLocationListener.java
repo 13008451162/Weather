@@ -67,11 +67,14 @@ public class MyLocationListener extends BDAbstractLocationListener {
         latitude = String.format("%.2f", location.getLatitude());
         longitude = String.format("%.2f", location.getLongitude());
 
-
-        locationInformationLiveData.postValue(
-                longitude + "," + latitude
-        );
-
+        Log.d("TAG","dongxi"+latitude+longitude);
+        float floatValue = Float.parseFloat(latitude);
+        if(Math.abs(floatValue)>0) {
+            Log.d("TAG","postValue");
+            locationInformationLiveData.postValue(
+                    longitude + "," + latitude
+            );
+        }
     }
 
 }

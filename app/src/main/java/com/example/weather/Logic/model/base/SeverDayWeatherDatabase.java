@@ -19,7 +19,7 @@ import com.example.weather.Logic.model.SevenDayWeatherDataModel;
  * 创建时间:2023/10/15 下午8:16
  * 描述: 存储7天天气情况的base
  */
-@Database(entities = {SevenDayWeatherDataModel.class},version = 2)
+@Database(entities = {SevenDayWeatherDataModel.class},version = 1)
 @TypeConverters(SeverDayWeatherDataConverter.class)
 public abstract class SeverDayWeatherDatabase extends RoomDatabase {
     public abstract SeverDayWeatherDataDao weatherDataDao();
