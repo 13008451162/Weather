@@ -13,6 +13,9 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.example.weather.TestTool.LogUtil;
 import com.example.weather.WeatherApplication;
 
+import lombok.Value;
+import lombok.var;
+
 /**
  * 项目名: weather
  * 文件名: funs
@@ -106,48 +109,48 @@ public class LocationSearch {
         mCoder.destroy();
     }
 
-    public static void reverseEncoding(double latitude,double longitude){
+    public static void reverseEncoding(double latitude, double longitude) {
+        GeoCoder mCoder = GeoCoder.newInstance();
 
-        GeoCoder mCoder = GeoCoder.newInstance();  //编码器
+        LatLng mLatLng = new LatLng(latitude, longitude);
 
-        LogUtil.d("FindlocData", latitude+"  "+longitude);
         OnGetGeoCoderResultListener listener = new OnGetGeoCoderResultListener() {
             @Override
             public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
-
+                // 处理正地理编码结果
             }
 
             @Override
             public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
+                LogUtil.d("YSGaSA", "Address " + reverseGeoCodeResult.toString());
+
                 // 处理反向地理编码结果
                 if (reverseGeoCodeResult == null || reverseGeoCodeResult.error != SearchResult.ERRORNO.NO_ERROR) {
-                    //没有找到检索结果
+                    LogUtil.d("YSGaSA", SearchResult.ERRORNO.NO_ERROR.toString());
+
                     Toast.makeText(WeatherApplication.getContext(), "地理位置出错了，请稍后再试！", Toast.LENGTH_SHORT).show();
                 } else {
-                    //详细地址
+                    // 获取详细地址和行政区号
                     String address = reverseGeoCodeResult.getAddress();
-                    //行政区号
                     int adCode = reverseGeoCodeResult.getCityCode();
-                    LogUtil.d("FindlocData", address + " " + adCode);
+                    LogUtil.d("YSGaSA", address + " " + adCode);
+
                 }
             }
         };
 
-
         mCoder.setOnGetGeoCodeResultListener(listener);
 
-        //通过经纬度获取地址
-        LatLng latLng = new LatLng(latitude, longitude);
         mCoder.reverseGeoCode(new ReverseGeoCodeOption()
-                .location(latLng)
-                // 设置是否返回新数据 默认值0不返回，1返回
+                .location(mLatLng)
                 .newVersion(1)
-                // POI召回半径，允许设置区间为0-1000米，超过1000米按1000米召回。默认值为1000
                 .radius(500));
 
-        //释放内存
+        LogUtil.d("YSGaSA", "位置信息：纬度：" + latitude + ",经度：" + longitude + ",坐标转地址：" + mLatLng);
+
         mCoder.destroy();
     }
+
 
 
     public double getLatitude() {

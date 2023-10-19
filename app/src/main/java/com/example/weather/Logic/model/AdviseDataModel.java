@@ -23,5 +23,11 @@ public class AdviseDataModel {
     public int id;
 
     @ColumnInfo
+    public String IdLocation;
+
+    @ColumnInfo
+    public String District;
+
+    @ColumnInfo
     public AdviseData.DailyDTO data;
 }

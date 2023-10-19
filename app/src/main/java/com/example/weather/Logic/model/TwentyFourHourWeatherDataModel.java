@@ -23,5 +23,8 @@ public class TwentyFourHourWeatherDataModel {
     public int id;
 
     @ColumnInfo
+    public String IdLocation;
+
+    @ColumnInfo
     public HourlyWeatherData.HourlyDTO data;
 }

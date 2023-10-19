@@ -3,12 +3,15 @@ package com.example.weather.LocationServicesDome;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
+import com.baidu.location.pb.Loc;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
@@ -31,9 +34,10 @@ import lombok.Synchronized;
 
 public class MyLocationListener extends BDAbstractLocationListener {
 
-
+    private volatile BDLocation Location;
     private volatile static MyLocationListener instance;
-    public MutableLiveData<String> locationInformationLiveData = new MutableLiveData<>("");
+
+    public MutableLiveData<BDLocation> bdLocationMutableLiveData = new MutableLiveData<>();
 
     // 私有构造函数，防止外部实例化
     private MyLocationListener() {
@@ -54,6 +58,13 @@ public class MyLocationListener extends BDAbstractLocationListener {
     @Override
     public void onReceiveLocation(BDLocation location) {
 
+        Log.d("TAG:", "111");
+
+        if (location == null) {
+            Log.d("TAG:", "222");
+        }
+
+
         String longitude;   //经度
         String latitude;    //纬度
 
@@ -64,17 +75,28 @@ public class MyLocationListener extends BDAbstractLocationListener {
                 .direction(location.getDirection()).latitude(location.getLatitude())
                 .longitude(location.getLongitude()).build();
 
-        latitude = String.format("%.2f", location.getLatitude());
-        longitude = String.format("%.2f", location.getLongitude());
 
-        Log.d("TAG","dongxi"+latitude+longitude);
+        latitude = String.format("%.2f", location.getLatitude());
+//        longitude = String.format("%.2f", location.getLongitude());
+
+
         float floatValue = Float.parseFloat(latitude);
-        if(Math.abs(floatValue)>0) {
-            Log.d("TAG","postValue");
-            locationInformationLiveData.postValue(
-                    longitude + "," + latitude
+
+        //可能出现为取得定位权限时，传递一个经纬度都是0的位置，所以需要if进行判断
+        if (Math.abs(floatValue) > 0 && location != null) {
+            bdLocationMutableLiveData.postValue(
+                    location
             );
         }
-    }
 
+//
+//        if (Math.abs(floatValue) > 0 && location != null) {
+//
+//            Location = location;
+//            locationInformationLiveData.postValue(
+//                    longitude + "," + latitude
+//            );
+//        }
+
+    }
 }

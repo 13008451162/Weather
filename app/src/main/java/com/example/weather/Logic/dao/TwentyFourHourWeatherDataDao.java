@@ -6,6 +6,7 @@ import androidx.room.Query;
 
 import com.example.weather.Logic.model.TwentyFourHourWeatherDataModel;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherData;
+import com.example.weather.Logic.netWorkUtil.LocationAndCity.SevenDayWeatherData;
 
 import java.util.List;
 
@@ -23,15 +24,14 @@ public interface TwentyFourHourWeatherDataDao {
     @Insert
     void insertData(TwentyFourHourWeatherDataModel...weatherData);
 
-    @Query("delete from TwentyFourHourWeatherDataModel")
-    void deleteAll();
+    @Query("DELETE FROM TwentyFourHourWeatherDataModel WHERE IdLocation = :locationId")
+    void deleteDataByLocation(String locationId);
 
-    /**
-     * 获取数据链表
-     * @return
-     */
-    @Query("SELECT data FROM TwentyFourHourWeatherDataModel")
-    List<HourlyWeatherData.HourlyDTO> getAllData();
+    @Query("SELECT data FROM TwentyFourHourWeatherDataModel WHERE IdLocation = :locationId")
+    List<HourlyWeatherData.HourlyDTO> getDataByLocation(String locationId);
+
+    @Query("UPDATE TwentyFourHourWeatherDataModel SET data = :newData WHERE IdLocation = :locationId")
+    void updateData(String locationId, HourlyWeatherData.HourlyDTO newData);
 
 }
 

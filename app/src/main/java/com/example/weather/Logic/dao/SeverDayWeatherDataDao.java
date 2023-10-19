@@ -5,6 +5,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 import com.example.weather.Logic.model.SevenDayWeatherDataModel;
+import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherData;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.SevenDayWeatherData;
 
 
@@ -25,7 +26,12 @@ public interface SeverDayWeatherDataDao {
     @Query("delete from SevenDayWeatherDataModel")
     void deleteAll();
 
+    @Query("DELETE FROM SevenDayWeatherDataModel WHERE IdLocation = :locationId")
+    void deleteDataByLocation(String locationId);
 
-    @Query("SELECT data FROM SevenDayWeatherDataModel")
-    List<SevenDayWeatherData.DailyDTO> getAllData();
+    @Query("SELECT data FROM SevenDayWeatherDataModel WHERE IdLocation = :locationId")
+    List<SevenDayWeatherData.DailyDTO> getDataByLocation(String locationId);
+
+    @Query("UPDATE SevenDayWeatherDataModel SET data = :newData WHERE IdLocation = :locationId")
+    void updateData(String locationId, SevenDayWeatherData.DailyDTO newData);
 }

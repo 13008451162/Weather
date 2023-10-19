@@ -6,6 +6,7 @@ import androidx.room.Query;
 
 import com.example.weather.Logic.model.AdviseDataModel;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.AdviseData;
+import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherData;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.SevenDayWeatherData;
 
 import java.util.List;
@@ -26,7 +27,15 @@ public interface AdviseDataDao {
     @Query("delete from AdviseDataModel")
     void deleteAll();
 
+    @Query("DELETE FROM AdviseDataModel WHERE IdLocation = :locationId")
+    void deleteDataByLocation(String locationId);
 
-    @Query("SELECT data FROM AdviseDataModel")
-    List<AdviseData.DailyDTO> getAllData();
+    @Query("SELECT data FROM AdviseDataModel WHERE IdLocation = :locationId")
+    List<AdviseData.DailyDTO> getDataByLocation(String locationId);
+
+    @Query("UPDATE AdviseDataModel SET data = :newData WHERE IdLocation = :locationId")
+    void updateData(String locationId, AdviseData.DailyDTO newData);
+
+    @Query("SELECT District FROM AdviseDataModel WHERE IdLocation = :targetIdLocation")
+    String getDistrictByLocationId(String targetIdLocation);
 }

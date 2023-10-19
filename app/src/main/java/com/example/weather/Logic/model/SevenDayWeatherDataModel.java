@@ -22,6 +22,9 @@ public class SevenDayWeatherDataModel {
     public int id;
 
     @ColumnInfo
+    public String IdLocation;
+
+    @ColumnInfo
     public SevenDayWeatherData.DailyDTO data;
 
 }

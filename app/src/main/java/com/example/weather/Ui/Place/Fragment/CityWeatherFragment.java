@@ -1,39 +1,28 @@
 package com.example.weather.Ui.Place.Fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.weather.LocationServicesDome.MyLocationListener;
-import com.example.weather.Logic.WeatherDataInquireTool;
-import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherData;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.SevenDayWeatherData;
-import com.example.weather.TestTool.LogUtil;
 import com.example.weather.Ui.Place.HourlyWeatherAdapter;
 import com.example.weather.Ui.Place.PlaceViewModel.CityWeatherViewModel;
-import com.example.weather.Ui.Place.PlaceViewModel.DataCallback;
 import com.example.weather.Ui.Place.SeverDayWeatherAdapter;
 import com.example.weather.databinding.CityWeaterFragmentBinding;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 项目名: weather
@@ -44,8 +33,6 @@ import java.util.List;
  */
 
 public class CityWeatherFragment extends Fragment {
-
-    private static final String TAG = "haojinhui";
 
     private CityWeaterFragmentBinding binding;
     private CityWeatherViewModel viewModel;
@@ -100,19 +87,24 @@ public class CityWeatherFragment extends Fragment {
     private void currentLocation() {
         //获取当前位置信息,加载当前位置信息的数据
         MyLocationListener myLocationListener = MyLocationListener.getInstance();
-        myLocationListener.locationInformationLiveData.observe(requireActivity(), this::updateHourWeather);
-        myLocationListener.locationInformationLiveData.observe(requireActivity(), this::updateDayWeather);
-        myLocationListener.locationInformationLiveData.observe(requireActivity(), this::upDataAdvise);
+        myLocationListener.bdLocationMutableLiveData.observe(requireActivity(), location -> {
+
+            String locationInformation = String.format("%.2f", location.getLongitude()) + "," + String.format("%.2f", location.getLatitude());
+            updateHourWeather(locationInformation);
+            updateDayWeather(locationInformation);
+            upDataAdvise(locationInformation, location.getDistrict());
+        });
     }
 
     /**
      * 加载指定位置的信息
+     *
      * @param id
      */
-    private void specifyLocation(String id) {
+    private void specifyLocation(String id, String locationName) {
         updateDayWeather(id);
         updateHourWeather(id);
-        upDataAdvise(id);
+        upDataAdvise(id, locationName);
     }
 
 
@@ -148,89 +140,84 @@ public class CityWeatherFragment extends Fragment {
         //加载视图数据
         viewModel.getSevenDayWeather(locationInformation).observe(requireActivity(), dailyDTOS -> {
 
-            getActivity().runOnUiThread(() -> {
+            // 设置单位的字体大小
+            int unitTextSize = 12; // 以 sp 为单位，根据需求调整
 
-                // 设置单位的字体大小
-                int unitTextSize = 12; // 以 sp 为单位，根据需求调整
+            SevenDayWeatherData.DailyDTO dto = dailyDTOS.get(0);
 
-                SevenDayWeatherData.DailyDTO dto = dailyDTOS.get(0);
+            String strAdvise = adviseUv(Integer.valueOf(dto.getUvIndex()));
 
-                String strAdvise = adviseUv(Integer.valueOf(dto.getUvIndex()));
+            //设置主界面的温度范围和建议情况
+            String nowTempAndsugg = dto.getTextDay() + "  " + dto.getTempMin() + "°/" + dto.getTempMax() + "°   " + strAdvise + "  " + dto.getUvIndex() + " mW/㎡";
+            SpannableString spannableString = new SpannableString(nowTempAndsugg);
+            spannableString.setSpan(new AbsoluteSizeSpan(unitTextSize, true), nowTempAndsugg.indexOf("mW"), nowTempAndsugg.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                //设置主界面的温度范围和建议情况
-                String nowTempAndsugg = dto.getTextDay() + "  " + dto.getTempMin() + "°/" + dto.getTempMax() + "°   " + strAdvise + "  " + dto.getUvIndex() + " mW/㎡";
-                SpannableString spannableString = new SpannableString(nowTempAndsugg);
-                spannableString.setSpan(new AbsoluteSizeSpan(unitTextSize, true), nowTempAndsugg.indexOf("mW"), nowTempAndsugg.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                binding.NowTempAndsugg.setText(spannableString);
+            binding.NowTempAndsugg.setText(spannableString);
 
 
-                //设置主界面紫外线，能见度，相对湿度，云量，大气压强等
+            //设置主界面紫外线，能见度，相对湿度，云量，大气压强等
 
-                // 原始文本内容
-                String uvIndex = dto.getUvIndex() + " mW/㎡";
-                String humidity = dto.getHumidity() + " %rh";
-                String precipitation = dto.getPrecip() + " mm";
-                String pressure = dto.getPressure() + " Hpa";
-                String Visbility = dto.getVis() + " km";
-
-
-                // 创建 SpannableString 对象
-                SpannableString spannableUvIndex = new SpannableString(uvIndex);
-                SpannableString spannableHumidity = new SpannableString(humidity);
-                SpannableString spannablePrecipitation = new SpannableString(precipitation);
-                SpannableString spannablePressure = new SpannableString(pressure);
-                SpannableString spannableVisbility = new SpannableString(Visbility);
-
-                //设置需要修改字体的文本内容
-                spannableUvIndex.setSpan(new AbsoluteSizeSpan(unitTextSize, true), uvIndex.indexOf("mW"), uvIndex.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                spannableHumidity.setSpan(new AbsoluteSizeSpan(unitTextSize, true), humidity.indexOf("%"), humidity.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                spannablePrecipitation.setSpan(new AbsoluteSizeSpan(unitTextSize, true), precipitation.indexOf("m"), precipitation.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                spannablePressure.setSpan(new AbsoluteSizeSpan(unitTextSize, true), pressure.indexOf("H"), pressure.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                spannableVisbility.setSpan(new AbsoluteSizeSpan(unitTextSize, true), Visbility.indexOf("k"), Visbility.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                // 设置 TextView 文本
-                binding.GridUv.setText(spannableUvIndex);
-                binding.GridCloud.setText(dto.getCloud());
-                binding.GridHumidity.setText(spannableHumidity);
-
-                binding.GridPrecipitation.setText(spannablePrecipitation);
-                binding.GridPressure.setText(spannablePressure);
-                binding.GridVisbility.setText(spannableVisbility);
+            // 原始文本内容
+            String uvIndex = dto.getUvIndex() + " mW/㎡";
+            String humidity = dto.getHumidity() + " %rh";
+            String precipitation = dto.getPrecip() + " mm";
+            String pressure = dto.getPressure() + " Hpa";
+            String Visbility = dto.getVis() + " km";
 
 
-                //设置7日内天气情况的RecyclerView
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                binding.futureWeater.setLayoutManager(linearLayoutManager);
+            // 创建 SpannableString 对象
+            SpannableString spannableUvIndex = new SpannableString(uvIndex);
+            SpannableString spannableHumidity = new SpannableString(humidity);
+            SpannableString spannablePrecipitation = new SpannableString(precipitation);
+            SpannableString spannablePressure = new SpannableString(pressure);
+            SpannableString spannableVisbility = new SpannableString(Visbility);
 
-                SeverDayWeatherAdapter adapter = new SeverDayWeatherAdapter(dailyDTOS);
-                binding.futureWeater.setAdapter(adapter);
-            });
+            //设置需要修改字体的文本内容
+            spannableUvIndex.setSpan(new AbsoluteSizeSpan(unitTextSize, true), uvIndex.indexOf("mW"), uvIndex.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableHumidity.setSpan(new AbsoluteSizeSpan(unitTextSize, true), humidity.indexOf("%"), humidity.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannablePrecipitation.setSpan(new AbsoluteSizeSpan(unitTextSize, true), precipitation.indexOf("m"), precipitation.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannablePressure.setSpan(new AbsoluteSizeSpan(unitTextSize, true), pressure.indexOf("H"), pressure.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableVisbility.setSpan(new AbsoluteSizeSpan(unitTextSize, true), Visbility.indexOf("k"), Visbility.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+            // 设置 TextView 文本
+            binding.GridUv.setText(spannableUvIndex);
+            binding.GridCloud.setText(dto.getCloud());
+            binding.GridHumidity.setText(spannableHumidity);
+
+            binding.GridPrecipitation.setText(spannablePrecipitation);
+            binding.GridPressure.setText(spannablePressure);
+            binding.GridVisbility.setText(spannableVisbility);
+
+
+            //设置7日内天气情况的RecyclerView
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            binding.futureWeater.setLayoutManager(linearLayoutManager);
+
+            SeverDayWeatherAdapter adapter = new SeverDayWeatherAdapter(dailyDTOS);
+            binding.futureWeater.setAdapter(adapter);
         });
     }
 
     /**
      * 用于显示当天的建议
      *
-     * @param locationInformation
+     * @param locationInformation 地址Id/经纬度
+     * @param locationName        位置的名称
      */
-    private void upDataAdvise(String locationInformation) {
-        viewModel.getAdviseWeatherLiveData(locationInformation).observe(requireActivity(), dailyDTOS -> {
-            getActivity().runOnUiThread(() -> {
+    private void upDataAdvise(String locationInformation, String locationName) {
 
-                binding.Sports.setText(dailyDTOS.get(0).getCategory() + "运动");
-                binding.CarWash.setText(dailyDTOS.get(1).getCategory() + "洗车");
-                binding.Dressing.setText("穿衣" + dailyDTOS.get(2).getCategory());
-                binding.Fishing.setText(dailyDTOS.get(3).getCategory() + "钓鱼");
-                binding.NowAdvise.setText(dailyDTOS.get(4).getText());
-                binding.Travel.setText(dailyDTOS.get(5).getCategory() + "旅游");
-                binding.Allergy.setText(dailyDTOS.get(6).getCategory() + "过敏");
-                binding.Comfortable.setText(dailyDTOS.get(7).getCategory());
-                binding.Cold.setText(dailyDTOS.get(8).getCategory() + "感冒");
+        viewModel.getAdviseWeatherLiveData(locationInformation, locationName).observe(requireActivity(), dailyDTOS -> {
 
-            });
+            binding.Sports.setText(dailyDTOS.get(0).getCategory() + "运动");
+            binding.CarWash.setText(dailyDTOS.get(1).getCategory() + "洗车");
+            binding.Dressing.setText("穿衣" + dailyDTOS.get(2).getCategory());
+            binding.Fishing.setText(dailyDTOS.get(3).getCategory() + "钓鱼");
+            binding.NowAdvise.setText(dailyDTOS.get(4).getText());
+            binding.Travel.setText(dailyDTOS.get(5).getCategory() + "旅游");
+            binding.Allergy.setText(dailyDTOS.get(6).getCategory() + "过敏");
+            binding.Comfortable.setText(dailyDTOS.get(7).getCategory());
+            binding.Cold.setText(dailyDTOS.get(8).getCategory() + "感冒");
         });
     }
 

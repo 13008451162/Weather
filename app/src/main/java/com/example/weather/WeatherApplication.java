@@ -8,12 +8,20 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.common.BaiduMapSDKException;
+import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.example.weather.LocationServicesDome.LocationSearch;
 import com.example.weather.LocationServicesDome.MyLocationListener;
 import com.example.weather.Logic.WeatherDataInquireTool;
 import com.example.weather.Logic.model.base.AdviseDatabase;
 import com.example.weather.Logic.model.base.SeverDayWeatherDatabase;
 import com.example.weather.Logic.model.base.TwentyFourHourWeatherDatabase;
+import com.example.weather.TestTool.LogUtil;
 
 /**
  * 项目名: weather
@@ -30,7 +38,7 @@ public class WeatherApplication extends Application {
 
 
     //获取初始状态的位置
-    private LocationClient mLocationClient;
+    private static LocationClient mLocationClient;
 
     private static WeatherApplication weatherApplication;
 
@@ -64,6 +72,8 @@ public class WeatherApplication extends Application {
         // 包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
         SDKInitializer.setCoordType(CoordType.BD09LL);
 
+
+
         try {
             mLocationClient = new LocationClient(getApplicationContext());
             initMap();
@@ -71,29 +81,43 @@ public class WeatherApplication extends Application {
             throw new RuntimeException(e);
         }
 
-        LocationSearch locationSearch = new LocationSearch();
-        locationSearch.Search("北京","北京上地十街10号");
-//        LocationSearch.reverseEncoding(34.163290267304646,108.91358047235403);
-
-
     }
 
     // 初始化地图和定位
     private void initMap() {
         // 定位初始化
         LocationClientOption option = new LocationClientOption();
-        option.setScanSpan(100_000);
+//        option.setScanSpan(100_000);
         mLocationClient.setLocOption(option);
 
+        //可选，是否需要地址信息，默认为不需要，即参数为false
+        //如果开发者需要获得当前点的地址信息，此处必须为true
+        option.setIsNeedAddress(true);
+
+        //可选，设置定位模式，默认高精度
+        //LocationMode.Hight_Accuracy：高精度；
+        //LocationMode. Battery_Saving：低功耗；
+        //LocationMode. Device_Sensors：仅使用设备；
+        //LocationMode.Fuzzy_Locating, 模糊定位模式；v9.2.8版本开始支持，可以降低API的调用频率，但同时也会降低定位精度；
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+
+        //可选，设置是否需要最新版本的地址信息。默认需要，即参数为true
+        option.setNeedNewVersionRgc(true);
+
+        //mLocationClient为初始化过的LocationClient对象,
+        //将配置好的LocationClientOption对象，
+        //通过setLocOption方法传递给LocationClient对象使用
+        mLocationClient.setLocOption(option);
+
+
         MyLocationListener myLocationListener = MyLocationListener.getInstance();
+        //声明LocationClient类
         mLocationClient.registerLocationListener(myLocationListener);
-        //后台不停抓取位置
+        //后台抓取位置
         mLocationClient.start();
-//        CityWeatherViewModel viewModel = new ViewModelProvider(CityWeatherFragment).get();
-//        mLocationClient.stop();
     }
 
-    public void StopGetLocation(){
+    public static void StopGetLocation(){
         if(mLocationClient.isStarted()){
             mLocationClient.stop();
         }
@@ -119,4 +143,6 @@ public class WeatherApplication extends Application {
         WeatherDataInquireTool.dpAdviseDatabase = AdviseDatabase.getInstance(context);
 
     }
+
+
 }

@@ -33,6 +33,7 @@ public abstract class GenericUtility<T>{
     }
 
     /**
+     *
      * 用于回调服务器返回的内容，将数据返回给ViewModel层的回调接口
      * @param address  需要访问的服务器地址
      * @param callback 被操作的回调接口
@@ -48,6 +49,7 @@ public abstract class GenericUtility<T>{
                          utility = createUtility(responseBody);
                          if (utility.handJsonParse()) {
                              List<T> dataList = utility.getDataList();
+                             LogUtil.d("ADDRRESS",dataList.toString());
                              callback.onSuccess(dataList);
                          }
                      } catch (Exception e) {
