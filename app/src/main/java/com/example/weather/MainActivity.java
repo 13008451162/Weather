@@ -80,12 +80,13 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "网络出错了,请检查网络链接", Toast.LENGTH_SHORT).show();
         }
 
-        //设置导航栏
-        setSupportActionBar(toolbar);
 
         font = Typeface.createFromAsset(getAssets(), "qweather-icons.ttf");//加载图标字体
 
 //        WeatherReplaceFragment(new CityWeatherFragment());
+
+
+
 
         fragmentList = new ArrayList<>();
         fragmentList.add(new CityWeatherFragment());
