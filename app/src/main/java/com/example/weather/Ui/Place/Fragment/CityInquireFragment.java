@@ -143,12 +143,7 @@ public class CityInquireFragment extends Fragment {
             @Override
             public void onFailure(IOException e) {
                 e.printStackTrace();
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(WeatherApplication.getContext(), "打开”移动数据“或\nWLAN网络来访问", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                getActivity().runOnUiThread(() -> Toast.makeText(WeatherApplication.getContext(), "打开”移动数据“或\nWLAN网络来访问", Toast.LENGTH_SHORT).show());
             }
         });
     }

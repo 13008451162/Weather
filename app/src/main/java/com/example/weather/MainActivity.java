@@ -19,13 +19,20 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.weather.Ui.Place.Fragment.CityInquireFragment;
 import com.example.weather.Ui.Place.Fragment.CityWeatherFragment;
 import com.example.weather.Ui.SearchActivity;
 import com.example.weather.databinding.ActivityMainBinding;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,10 +43,13 @@ public class MainActivity extends AppCompatActivity {
     private static ActivityMainBinding binding;
 
     private static Typeface font;
+    private static List<Fragment> fragmentList;
+    private static ViewPager2FragmentAdapter viewPager2FragmentAdapter;
 
     public static Typeface getFont() {
         return font;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +85,37 @@ public class MainActivity extends AppCompatActivity {
 
         font = Typeface.createFromAsset(getAssets(), "qweather-icons.ttf");//加载图标字体
 
-        WeatherReplaceFragment(new CityWeatherFragment());
+//        WeatherReplaceFragment(new CityWeatherFragment());
+
+        fragmentList = new ArrayList<>();
+        fragmentList.add(new CityWeatherFragment());
+        viewPager2FragmentAdapter = new ViewPager2FragmentAdapter(this, fragmentList);
+
+        binding.ViewPager2.setAdapter(viewPager2FragmentAdapter);
 
         setContentView(binding.getRoot());
 
     }
 
+
+    /**
+     *  增加城市天气
+     * @param fragments 需要添加的新的fragment
+     */
+    public static void addDataFragment(CityWeatherFragment...fragments){
+        Collections.addAll(fragmentList,fragments);
+        viewPager2FragmentAdapter.notifyDataSetChanged();
+
+    }
+
+    /**
+     * 删除城市天气
+     * @param position 需要删除的位置
+     */
+    public static void delteDataFragment(int position){
+        fragmentList.remove(position);
+        viewPager2FragmentAdapter.notifyDataSetChanged();
+    }
 
 
     // 判断网络连接状态
@@ -136,10 +171,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void WeatherReplaceFragment(Fragment fragment){
+    private void WeatherReplaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.WeatherFragment,fragment);
+        transaction.replace(R.id.WeatherFragment, fragment);
         transaction.commit();
     }
 
@@ -149,5 +184,28 @@ public class MainActivity extends AppCompatActivity {
 
     public static ActivityMainBinding getBinding() {
         return binding;
+    }
+
+
+    // 提供了FragmentStateAdapter 只需要继承它即可 不用继承RecycleView.Adapter
+    static class ViewPager2FragmentAdapter extends FragmentStateAdapter {
+
+        private List<Fragment> mFragmentList;
+
+        public ViewPager2FragmentAdapter(@NonNull FragmentActivity fragmentActivity, List<Fragment> mFragmentList) {
+            super(fragmentActivity);
+            this.mFragmentList = mFragmentList;
+        }
+
+        @NonNull
+        @Override
+        public Fragment createFragment(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mFragmentList != null ? mFragmentList.size() : 0;
+        }
     }
 }
