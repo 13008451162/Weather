@@ -137,6 +137,11 @@ public class CityWeatherFragment extends Fragment {
      * @param locationInformation 位置信息
      */
     private void updateDayWeather(String locationInformation) {
+
+//        //检查 Fragment 是否已附加到 Activity，然后再执行相应的操作。
+//        if (!isAdded()){
+//
+//        }
         //加载视图数据
         viewModel.getSevenDayWeather(locationInformation).observe(requireActivity(), dailyDTOS -> {
 

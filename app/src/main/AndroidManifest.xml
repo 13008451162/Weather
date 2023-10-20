@@ -33,6 +33,15 @@
         android:theme="@style/Theme.Weather"
         tools:targetApi="31">
 
+        <activity android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
         <service android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote"/>
@@ -41,16 +50,6 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="vYQerVGFUHKy90gd0qmPGiZVt332Lepw" >
         </meta-data>
-
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
         <activity
             android:name=".Ui.SearchActivity"

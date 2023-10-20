@@ -1,15 +1,10 @@
 package com.example.weather.Ui.Place.PlaceViewModel;
 
 import android.app.Activity;
-import android.util.Log;
-import android.widget.Toast;
 
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
-import com.example.weather.LocationServicesDome.MyLocationListener;
 import com.example.weather.Logic.WeatherDataInquireTool;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.AdviseData;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.AdviseDataUtility;
@@ -18,11 +13,9 @@ import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherUtilit
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.SevenDayWeatherData;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.SevenDayWeatherUtility;
 import com.example.weather.MainActivity;
-import com.example.weather.TestTool.LogUtil;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Handler;
 
 /**
  * 项目名: weather

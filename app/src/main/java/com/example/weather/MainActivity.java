@@ -22,9 +22,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.weather.LocationServicesDome.MyLocationListener;
-import com.example.weather.Logic.WeatherDataInquireTool;
-import com.example.weather.TestTool.LogUtil;
 import com.example.weather.Ui.Place.Fragment.CityInquireFragment;
 import com.example.weather.Ui.Place.Fragment.CityWeatherFragment;
 import com.example.weather.Ui.SearchActivity;
@@ -38,19 +35,32 @@ public class MainActivity extends AppCompatActivity {
 
     private static ActivityMainBinding binding;
 
+
+
     private static Typeface font;
+
+    public static Typeface getFont() {
+        return font;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        activity = this;
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
-        //显示出操作栏
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        activity = this;
 
+        /*
+         注意只要使用binding加载页面，就需要更改所有的findViewById
+             Toolbar toolbar = findViewById(R.id.toolbar);
+             setSupportActionBar(toolbar);
+         */
+
+        //显示出操作栏
+        Toolbar toolbar = binding.toolbar; // 使用 binding 对象来查找 Toolbar
         setSupportActionBar(toolbar);
+
 
         // 动态请求位置权限
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -67,24 +77,13 @@ public class MainActivity extends AppCompatActivity {
 
         font = Typeface.createFromAsset(getAssets(), "qweather-icons.ttf");//加载图标字体
 
-//        //获取当前位置信息,加载当前位置信息的数据
-//        MyLocationListener myLocationListener = MyLocationListener.getInstance();
-//        myLocationListener.bdLocationMutableLiveData.observe(this, location -> {
-//
-//            String locationInformation = String.format("%.2f", location.getLongitude()) + "," + String.format("%.2f", location.getLatitude());
-//            String DistrictName = WeatherDataInquireTool.dpAdviseDatabase.WeatherDataDao().getDistrictByLocationId(locationInformation);
-//        });
-
-        //加载天气情况
-//        weatherReplaceFragment(new CityWeatherFragment());
+        WeatherReplaceFragment(new CityWeatherFragment());
 
         setContentView(binding.getRoot());
 
     }
 
-    public static Typeface getFont() {
-        return font;
-    }
+
 
     // 判断网络连接状态
     public boolean isNetworkConnected(Context context) {
@@ -106,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // 用户同意了位置权限，初始化地图等操作
-
             } else {
                 // 用户拒绝了位置权限，你可以给予适当的提示或处理
                 Toast.makeText(this, "定位出现问题了，请检查定位是否开启", Toast.LENGTH_SHORT).show();
@@ -124,8 +122,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        LogUtil.d("SGGS","IUAHZFA");
         int Id = item.getItemId();
 
         if (Id == R.id.Clothes) {
@@ -133,8 +129,6 @@ public class MainActivity extends AppCompatActivity {
         } else if (Id == R.id.Country) {
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(intent);
-
-//            replaceFragment(new CityInquireFragment());
 
             return true;
         } else if (Id == R.id.Set) {
@@ -144,35 +138,18 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * 加载城市天气的Fragment控件
-     * @param fragment 需要加载的fragment
-     */
-//    private void weatherReplaceFragment(Fragment fragment) {
-//
-//        //获取FragmentManager
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//
-//        //获取Fragment管理器
-//        FragmentTransaction transaction = fragmentManager.beginTransaction();
-//
-//        // 将MyFragment添加到Activity
-//        transaction.replace(R.id.MainCityView,fragment);
-//
-//        // 提交事务
-//        transaction.commit();
-//    }
-
-//    private void cityReplaceFragment(Fragment fragment){
-//        FragmentManager manager = getSupportFragmentManager();
-//        FragmentTransaction transaction = manager.beginTransaction();
-//    }
-
-    public static ActivityMainBinding getBinding() {
-        return binding;
+    private void WeatherReplaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.WeatherFragment,fragment);
+        transaction.commit();
     }
 
     public static Activity getActivity() {
         return activity;
+    }
+
+    public static ActivityMainBinding getBinding() {
+        return binding;
     }
 }

@@ -3,6 +3,7 @@ package com.example.weather;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
@@ -53,7 +54,6 @@ public class WeatherApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
 
         // 获取context
         context = this;

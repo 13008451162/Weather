@@ -23,7 +23,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="35dp"
                 android:gravity="center"
-                android:text="14°"
                 android:textSize="90dp" />
 
             <TextView
@@ -31,7 +30,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="阴 13°/16° 空气优 35"
                 android:textSize="18dp" />
 
             <com.google.android.material.card.MaterialCardView

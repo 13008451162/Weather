@@ -1,8 +1,6 @@
 package com.example.weather.Ui.Place;
 
-import android.graphics.Typeface;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherData;
 import com.example.weather.MainActivity;
 import com.example.weather.R;
-import com.example.weather.TestTool.LogUtil;
 import com.example.weather.databinding.TodayWeatherItemBinding;
 
 import java.util.ArrayList;

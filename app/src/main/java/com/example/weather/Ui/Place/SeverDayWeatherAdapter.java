@@ -1,17 +1,12 @@
 package com.example.weather.Ui.Place;
 
-import static com.example.weather.Ui.Place.SeverDayWeatherAdapter.*;
-
-import android.content.Context;
 import android.text.Html;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.SevenDayWeatherData;

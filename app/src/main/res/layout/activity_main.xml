@@ -40,18 +40,23 @@
                 android:layout_gravity="center"
                 android:gravity="bottom"
                 android:textColor="#000000"
-                android:text="长安区"
                 android:textSize="25dp"
                 android:textStyle="bold"/>
 
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <fragment
-        android:id="@+id/cityWeatherFragment"
-        android:name="com.example.weather.Ui.Place.Fragment.CityWeatherFragment"
+
+<!--    <fragment-->
+<!--        android:id="@+id/cityWeatherFragment"-->
+<!--        android:name="com.example.weather.Ui.Place.Fragment.CityWeatherFragment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"/>-->
+
+    <FrameLayout
+        android:id="@+id/WeatherFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
