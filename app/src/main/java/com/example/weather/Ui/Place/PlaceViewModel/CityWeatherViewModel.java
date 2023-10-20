@@ -14,6 +14,7 @@ import com.example.weather.Logic.netWorkUtil.LocationAndCity.HourlyWeatherUtilit
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.SevenDayWeatherData;
 import com.example.weather.Logic.netWorkUtil.LocationAndCity.SevenDayWeatherUtility;
 import com.example.weather.MainActivity;
+import com.example.weather.TestTool.LogUtil;
 
 import java.io.IOException;
 import java.util.List;
@@ -27,6 +28,10 @@ import java.util.List;
  */
 
 public class CityWeatherViewModel extends ViewModel {
+
+    //"&key=64f323b501dc410cb7ec4fd1b503aab4"
+
+    private static final String key = "&key=e4674dcb696f471da0859d48f4152b08";
     private Activity requireActivity;
 
     //检测近7天的天气变化情况
@@ -60,7 +65,7 @@ public class CityWeatherViewModel extends ViewModel {
 
 
         //获取天气的地址
-        String address = "https://devapi.qweather.com/v7/weather/24h?location=" + locationInformation + "&key=64f323b501dc410cb7ec4fd1b503aab4";
+        String address = "https://devapi.qweather.com/v7/weather/24h?location=" + locationInformation + key;
 
 
         HourlyWeatherUtility utility = new HourlyWeatherUtility();
@@ -91,7 +96,7 @@ public class CityWeatherViewModel extends ViewModel {
      */
     public MutableLiveData<List<SevenDayWeatherData.DailyDTO>> getSevenDayWeather(final String locationInformation) {
         //获取天气的地址
-        String address = "https://devapi.qweather.com/v7/weather/7d?location=" + locationInformation + "&key=64f323b501dc410cb7ec4fd1b503aab4";
+        String address = "https://devapi.qweather.com/v7/weather/7d?location=" + locationInformation + key;
 
         SevenDayWeatherUtility utility = new SevenDayWeatherUtility();
 
@@ -121,8 +126,9 @@ public class CityWeatherViewModel extends ViewModel {
      */
     public MutableLiveData<List<AdviseData.DailyDTO>> getAdviseWeatherLiveData(final String locationInformation, String locationName) {
         //获取天气的地址
-        String address = "https://devapi.qweather.com/v7/indices/1d?type=1,2,3,4,6,7,8,9,5&location=" + locationInformation + "&key=64f323b501dc410cb7ec4fd1b503aab4";
+        String address = "https://devapi.qweather.com/v7/indices/1d?type=1,2,3,4,6,7,8,9,5&location=" + locationInformation + key;
 
+        LogUtil.d("ADDRRESS",address);
         AdviseDataUtility utility = new AdviseDataUtility();
 
 
@@ -161,4 +167,5 @@ public class CityWeatherViewModel extends ViewModel {
         });
         return adviseWeatherLiveData;
     }
+
 }

@@ -15,8 +15,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.weather.Ui.Place.PlaceAdapter;
+import com.example.weather.R;
 import com.example.weather.Ui.Place.PlaceViewModel.DataCallback;
 import com.example.weather.Logic.netWorkUtil.WeatherAndRemind.LocationData;
 import com.example.weather.TestTool.LogUtil;
@@ -24,9 +25,10 @@ import com.example.weather.Logic.netWorkUtil.WeatherAndRemind.LocationUtility;
 import com.example.weather.Logic.netWorkUtil.WeatherAndRemind.PopularCitiesData;
 import com.example.weather.Logic.netWorkUtil.WeatherAndRemind.PopularCitiesUtility;
 import com.example.weather.Ui.Place.PlaceViewModel.CityUiViewmodel;
-import com.example.weather.Ui.Place.PopularCitiesAdapter;
 import com.example.weather.WeatherApplication;
 import com.example.weather.databinding.FragmentPlaceBinding;
+import com.example.weather.databinding.PlaceItemBinding;
+import com.example.weather.databinding.PopularCitiesItemBinding;
 
 import java.io.IOException;
 import java.util.List;
@@ -227,6 +229,127 @@ public class CityInquireFragment extends Fragment {
                     });
                 }
             });
+        }
+    }
+
+    /**
+     *  一个用于显示城市搜索内容数据的适配器
+     */
+    private class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> {
+
+        private List<LocationData.LocationDTO> mLocationData;
+
+        public PlaceAdapter(List<LocationData.LocationDTO> mLocationData) {
+            this.mLocationData = mLocationData;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.place_item, parent, false);
+
+            //防止被修改
+            final ViewHolder holder = new ViewHolder(view);
+
+            //注册外层监听事件
+            holder.CityView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //通过hold可以获取适配器的位置
+                    int position = holder.getAdapterPosition();
+
+                    //取得相应的经纬度
+                    LocationData.LocationDTO locationDTO = mLocationData.get(position);
+                    Toast.makeText(WeatherApplication.getContext(), locationDTO.getName(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            return holder;
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            LocationData.LocationDTO locationDTO = mLocationData.get(position);
+
+            //设置城市信息
+            holder.binding.City.setText(locationDTO.getName());
+            holder.binding.CityDetails.setText(locationDTO.getCountry()
+                    + "  " + locationDTO.getAdm1()
+                    + "  " + locationDTO.getAdm2());
+        }
+
+        @Override
+        public int getItemCount() {
+            return mLocationData != null ? mLocationData.size() : 0;
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+
+            PlaceItemBinding binding;
+            View CityView;  //外层的View，用于设置点击事件
+
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+                binding = PlaceItemBinding.bind(itemView);  //选择项
+                CityView = itemView;
+            }
+        }
+    }
+
+    /**
+     *  一个用于显示热门城市数据的适配器
+     */
+    class PopularCitiesAdapter extends RecyclerView.Adapter<PopularCitiesAdapter.ViewHolder> {
+
+        private List<PopularCitiesData.TopCityListDTO> mPopularData;
+
+        public PopularCitiesAdapter(List<PopularCitiesData.TopCityListDTO> mPopularData) {
+            this.mPopularData = mPopularData;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.popular_cities_item, parent, false);
+
+            //防止被修改
+            final PopularCitiesAdapter.ViewHolder holder = new PopularCitiesAdapter.ViewHolder(view);
+
+            //注册外层监听事件
+            holder.PopularView.setOnClickListener(view1 -> {
+                //通过hold可以获取适配器的位置
+                int position = holder.getAdapterPosition();
+
+                //取得相应的经纬度
+                PopularCitiesData.TopCityListDTO cityListDTO = mPopularData.get(position);
+                Toast.makeText(WeatherApplication.getContext(),cityListDTO.getName(),Toast.LENGTH_SHORT).show();
+            });
+
+            return holder;
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            PopularCitiesData.TopCityListDTO cityListDTO = mPopularData.get(position);
+            holder.binding.PopularRecyclerViewCity.setText(cityListDTO.getName());
+        }
+
+        @Override
+        public int getItemCount() {
+            return mPopularData != null ? mPopularData.size() : 0;
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder{
+
+            PopularCitiesItemBinding binding;
+
+            View PopularView;   //外层的View
+
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+                binding = PopularCitiesItemBinding.bind(itemView);
+                PopularView = itemView;
+            }
         }
     }
 }
