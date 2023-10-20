@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static ActivityMainBinding binding;
 
-
-
     private static Typeface font;
 
     public static Typeface getFont() {
@@ -86,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     // 判断网络连接状态
-    public boolean isNetworkConnected(Context context) {
+    public static boolean isNetworkConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager != null) {
             NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();

@@ -1,6 +1,7 @@
 package com.example.weather.Ui.Place.PlaceViewModel;
 
 import android.app.Activity;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -35,22 +36,31 @@ public class CityWeatherViewModel extends ViewModel {
     private MutableLiveData<List<AdviseData.DailyDTO>> adviseWeatherLiveData = new MutableLiveData<>();
 
 
+    //保存的数据
+
+
+    public Activity getRequireActivity() {
+        return requireActivity;
+    }
+
     public void setRequireActivity(Activity activity) {
         this.requireActivity = activity;
     }
 
 
+
+
     /**
      * 请求24小时内的天气情况
      *
-     * @param Location 地址Id/经纬度
+     * @param locationInformation 地址Id/经纬度
      * @return 返回保存天气情况链表的Livedata
      */
-    public MutableLiveData<List<HourlyWeatherData.HourlyDTO>> getHourlyDTo(final String Location) {
+    public MutableLiveData<List<HourlyWeatherData.HourlyDTO>> getHourlyDTo(final String locationInformation) {
 
 
         //获取天气的地址
-        String address = "https://devapi.qweather.com/v7/weather/24h?location=" + Location + "&key=64f323b501dc410cb7ec4fd1b503aab4";
+        String address = "https://devapi.qweather.com/v7/weather/24h?location=" + locationInformation + "&key=64f323b501dc410cb7ec4fd1b503aab4";
 
 
         HourlyWeatherUtility utility = new HourlyWeatherUtility();
@@ -59,13 +69,13 @@ public class CityWeatherViewModel extends ViewModel {
 
             @Override
             public void onSuccess(List<HourlyWeatherData.HourlyDTO> dataList) {
-                WeatherDataInquireTool.HourSplitList(dataList, Location);
+                WeatherDataInquireTool.HourSplitList(dataList, locationInformation);
                 hourWeatherLiveData.postValue(dataList);
             }
 
             @Override
             public void onFailure(IOException e) {
-                hourWeatherLiveData.postValue(WeatherDataInquireTool.dpHourWeatherDatabase.weatherDataDao().getDataByLocation(Location));
+                hourWeatherLiveData.postValue(WeatherDataInquireTool.dpHourWeatherDatabase.weatherDataDao().getDataByLocation(locationInformation));
             }
         });
 
@@ -76,12 +86,12 @@ public class CityWeatherViewModel extends ViewModel {
     /**
      * 获取7日内的天气情况
      *
-     * @param Location 地址Id/经纬度
+     * @param locationInformation 地址Id/经纬度
      * @return 返回保存7日天气情况的LiveData
      */
-    public MutableLiveData<List<SevenDayWeatherData.DailyDTO>> getSevenDayWeather(final String Location) {
+    public MutableLiveData<List<SevenDayWeatherData.DailyDTO>> getSevenDayWeather(final String locationInformation) {
         //获取天气的地址
-        String address = "https://devapi.qweather.com/v7/weather/7d?location=" + Location + "&key=64f323b501dc410cb7ec4fd1b503aab4";
+        String address = "https://devapi.qweather.com/v7/weather/7d?location=" + locationInformation + "&key=64f323b501dc410cb7ec4fd1b503aab4";
 
         SevenDayWeatherUtility utility = new SevenDayWeatherUtility();
 
@@ -90,13 +100,13 @@ public class CityWeatherViewModel extends ViewModel {
             @Override
             public void onSuccess(List<SevenDayWeatherData.DailyDTO> dataList) {
 
-                WeatherDataInquireTool.DaySplitList(dataList, Location);
+                WeatherDataInquireTool.DaySplitList(dataList, locationInformation);
                 sevenDayWeatherLiveData.postValue(dataList);
             }
 
             @Override
             public void onFailure(IOException e) {
-                sevenDayWeatherLiveData.postValue(WeatherDataInquireTool.dpDayWeatherDatabase.weatherDataDao().getDataByLocation(Location));
+                sevenDayWeatherLiveData.postValue(WeatherDataInquireTool.dpDayWeatherDatabase.weatherDataDao().getDataByLocation(locationInformation));
             }
         });
         return sevenDayWeatherLiveData;
@@ -105,13 +115,13 @@ public class CityWeatherViewModel extends ViewModel {
     /**
      * 请求当日天气情况的生活建议
      *
-     * @param Location     地址Id/经纬度
+     * @param locationInformation     地址Id/经纬度
      * @param locationName 位置的名称
      * @return 返回保存当日天气情况的生活建议的LiveData
      */
-    public MutableLiveData<List<AdviseData.DailyDTO>> getAdviseWeatherLiveData(final String Location, String locationName) {
+    public MutableLiveData<List<AdviseData.DailyDTO>> getAdviseWeatherLiveData(final String locationInformation, String locationName) {
         //获取天气的地址
-        String address = "https://devapi.qweather.com/v7/indices/1d?type=1,2,3,4,6,7,8,9,5&location=" + Location + "&key=64f323b501dc410cb7ec4fd1b503aab4";
+        String address = "https://devapi.qweather.com/v7/indices/1d?type=1,2,3,4,6,7,8,9,5&location=" + locationInformation + "&key=64f323b501dc410cb7ec4fd1b503aab4";
 
         AdviseDataUtility utility = new AdviseDataUtility();
 
@@ -121,12 +131,12 @@ public class CityWeatherViewModel extends ViewModel {
             @Override
             public void onSuccess(List<AdviseData.DailyDTO> dataList) {
 
-                WeatherDataInquireTool.AdviseSplitList(dataList, Location, locationName);
+                WeatherDataInquireTool.AdviseSplitList(dataList, locationInformation, locationName);
                 adviseWeatherLiveData.postValue(dataList);
 
                 //危险操作
                 String Name = WeatherDataInquireTool.dpAdviseDatabase.WeatherDataDao()
-                        .getDistrictByLocationId(Location);
+                        .getDistrictByLocationId(locationInformation);
 
                 MainActivity.getActivity().runOnUiThread(() -> {
                     //危险的操作，在ViewModel中设置了主界面的名称
@@ -139,14 +149,14 @@ public class CityWeatherViewModel extends ViewModel {
 
                 //危险操作
                 String Name = WeatherDataInquireTool.dpAdviseDatabase.WeatherDataDao()
-                        .getDistrictByLocationId(Location);
+                        .getDistrictByLocationId(locationInformation);
 
                 MainActivity.getActivity().runOnUiThread(() -> {
                     //危险的操作，在ViewModel中设置了主界面的名称
                     MainActivity.getBinding().LocationName.setText(Name);
                 });
 
-                adviseWeatherLiveData.postValue(WeatherDataInquireTool.dpAdviseDatabase.WeatherDataDao().getDataByLocation(Location));
+                adviseWeatherLiveData.postValue(WeatherDataInquireTool.dpAdviseDatabase.WeatherDataDao().getDataByLocation(locationInformation));
             }
         });
         return adviseWeatherLiveData;

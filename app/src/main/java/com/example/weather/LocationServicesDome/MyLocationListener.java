@@ -89,14 +89,5 @@ public class MyLocationListener extends BDAbstractLocationListener {
             );
         }
 
-//
-//        if (Math.abs(floatValue) > 0 && location != null) {
-//
-//            Location = location;
-//            locationInformationLiveData.postValue(
-//                    longitude + "," + latitude
-//            );
-//        }
-
     }
 }
